@@ -1,0 +1,1572 @@
+函数名称：R_TRIG
+参数：
+- CLK：Input，BOOL，用于检测信号上升沿的输入信号。
+- Q：Output，BOOL，用于输出信号上升沿检测结果。
+规则：
+- 当 CLK 从 0 变为 1 时，Q = 1，持续一个循环周期；否则 Q = 0。
+
+函数名称：F_TRIG
+参数：
+- CLK：Input，BOOL，作为输入信号，用于检测边沿。
+- Q：Output，BOOL，作为边沿检测的结果。
+功能描述：F_TRIG函数用于检测CLK信号的上升沿。如果检测到CLK从0变为1，则Q在一个周期内设置为1，否则Q为0。
+使用示例：
+SCL
+"F_TRIG_DB"(CLK := "TagIn", Q => "TagOut");
+备注：为了确保F_TRIG在CPU启动后能显示标准中所描述的特性，需要将Stat_Bit实例的值初始化为TRUE。
+
+函数名称：TON
+参数：
+- IN：Input，BOOL，启动输入。
+- PT：Input，TIME、LTIME，接通延时的持续时间，PT的值必须为正数。
+- Q：Output，BOOL，定时器PT内时间用完时，保持置位状态的操作数。
+- ET：Output，TIME、LTIME，当前定时器的值。
+功能描述：TON函数是一个接通延时定时器，当IN的信号状态从“0”变为“1”时，启动定时器开始计时。当计时到达预设时间PT后，Q的信号状态变为“1”。如果IN的信号状态变为“0”，则定时器复位，Q和ET的值也会被重置。
+使用示例：
+SCL
+"TP_DB".TP(IN := "Tag_Start", PT := "Tag_PresetTime", Q => "Tag_Status", ET => "Tag_ElapsedTime");
+备注：TON函数需要分配给一个IEC定时器实例，该实例可以是一个背景数据块或程序块的静态局部变量。
+
+函数名称：TOF
+参数：
+- IN：Input，BOOL，启动输入。
+- PT：Input，TIME/LTIME，关断延时的持续时间。PT的值必须为正数。
+- Q：Output，BOOL，PT内时间用完时，复位的操作数。
+- ET：Output，TIME/LTIME，当前定时器的值。
+功能描述：TOF函数用于在PLC中进行关断延时操作。当IN的信号状态从1变为0时，PT参数预设的时间开始计时。只要PT持续时间仍在计时，Q就保持置位。持续时间PT计时结束后，Q将复位。如果IN的信号状态在PT计时结束之前变为1，则复位定时器。ET参数查询当前的时间值，从T#0s开始，在达到持续时间PT后结束。在PT过后，在IN重新变为1之前，ET会一直保持为当前值。如果IN在时间PT用完之前变为1，则ET将复位为T#0s。
+使用示例：
+SCL
+"TOF_DB".TOF(IN := "Tag_Start", PT := "Tag_PresetTime", Q => "Tag_Status", ET => "Tag_ElapsedTime");
+
+函数名称：TONR
+参数：
+- IN：Input，BOOL，启动输入，用于开始时间累加。
+- R：Input，BOOL，复位输入，用于复位ET和Q。
+- PT：Input，TIME/LTIME，时间记录的最长持续时间，PT的值必须为正数。
+- Q：Output，BOOL，定时器PT内时间用完时，仍保持置位状态的操作数。
+- ET：Output，TIME/LTIME，累计的时间。
+功能描述：TONR函数用于累加由参数PT设定的时间段内的时间值。当IN的信号状态变为1时，开始执行时间测量并累加时间。当IN的信号状态变为0时，时间测量中断。当累加时间达到PT的值时，Q的信号状态变为1。R的信号状态为1时，将复位ET和Q。
+使用示例：
+SCL
+"Tag_Result" := TONR(IN := "Tag_Start", R := "Tag_Reset", PT := "Tag_PresetTime", Q => "Tag_Status", ET => "Tag_ElapsedTime");
+备注：TONR函数需要分配一个用于存储实例数据的IEC定时器。
+
+函数名称：PRESET_TIMER
+参数：
+- PT：Input，TIME，指定要加载到IEC定时器中的持续时间。
+- TIMER：Input，iec_timer，指定要加载持续时间的IEC定时器。
+主要作用场景：用于为IEC定时器设置持续时间，覆盖定时器当前值。
+
+函数名称：S_PULSE
+参数：
+- T_NO：Input，TIMER、INT，已启动的定时器，数量取决于CPU。
+- S：Input，BOOL，启动输入。
+- TV：Input，S5TIME、WORD，预设时间值。
+- R：Input，BOOL，复位输入。
+- Q：Output，BOOL，定时器的状态。
+- BI：Output，WORD，当前二进制编码的时间值。
+- 函数值：S5TIME，当前定时器的值。
+规则：
+- 如果定时器正在计时且输入端R的信号状态变为“1”，则当前时间值和时间基准也将设置为0。
+- 如果定时器未在计时，则输入R的信号状态为“1”不会有任何作用。
+- 只要定时器正在计时且参数S的信号状态为“1”，参数Q就将返回信号状态“1”。
+- 当参数S的信号状态在超出预设的时间之前变为“0”时，则Q参数将返回信号状态“0”。
+- 如果定时器通过参数R复位或超时，则参数Q也将返回信号状态“0”。
+- 每次访问都更新指令数据，因此，周期开始时与周期结束时的数据查询可能会返回不同的值。
+
+函数名称：S_PEXT
+参数：
+- T_NO：Input，TIMER、INT，已启动的定时器，数量取决于CPU。
+- S：Input，BOOL，启动输入。
+- TV：Input，S5TIME、WORD，预设时间值。
+- R：Input，BOOL，复位输入。
+- Q：Output，BOOL，定时器的状态。
+- BI：Output，WORD，当前二进制编码的时间值。
+- 函数值：S5TIME，当前定时器的值。
+规则：
+- 当检测到参数S的信号上升沿时，“分配扩展脉冲定时器参数并启动”指令将启动预设的定时器。
+- 只要S参数的信号状态更改为“0”，定时器便将运行一段预设的时间(TV)。
+- 定时器计时期间，参数Q将返回信号状态“1”。
+- 定时器达到预置时间时，参数Q将复位为“0”。
+- 如果在定时器计时期间参数S的信号状态从“0”变为“1”，定时器将在TV参数中设置的时间内重新启动。
+
+函数名称：S_ODT
+参数：
+- T_NO：Input，TIMER或INT，已启动的定时器，其数量取决于CPU。
+- S：Input，BOOL，启动输入。
+- TV：Input，S5TIME或WORD，预设时间值。
+- R：Input，BOOL，复位输入。
+- Q：Output，BOOL，定时器的状态。
+- BI：Output，WORD，当前二进制编码的时间值。
+- 函数值：S5TIME，当前定时器的值。
+功能描述：S_ODT函数用于启动接通延时定时器，当检测到S参数的信号上升沿时开始计时。只要S参数的信号状态为1，定时器就会一直计时。如果定时器达到预设时间，Q参数将返回信号状态1。如果在计时期间S的信号状态从1变为0，定时器将停止计时，Q参数返回信号状态0。
+
+函数名称：S_ODTS
+参数：
+- T_NO：Input，TIMER或INT，已启动的定时器，数量取决于CPU。
+- S：Input，BOOL，启动输入指令。
+- TV：Input，S5TIME或WORD，预设时间值。
+- R：Input，BOOL，复位输入。
+- Q：Output，BOOL，定时器的状态。
+- BI：Output，WORD，当前二进制编码的时间值。
+- 函数值：S5TIME，当前定时器的值。
+功能描述：S_ODTS函数用于分配保持型接通延时定时器参数并启动。当检测到参数S的信号上升沿时，函数将启动预设的定时器。只要S参数的信号状态更改为“0”，定时器便将运行一段预设的时间(TV)。
+
+函数名称：S_OFFDT
+参数：
+- T_NO：Input，TIMER或INT，已启动的定时器，数量取决于CPU。
+- S：Input，BOOL，启动输入指令。
+- TV：Input，S5TIME或WORD，预设时间值。
+- R：Input，BOOL，复位输入。
+- Q：Output，BOOL，定时器的状态。
+- BI：Output，WORD，当前二进制编码的时间值。
+- 函数值：S5TIME，当前定时器的值。
+功能描述：S_OFFDT函数用于分配关断延时定时器参数并启动。当检测到参数S的信号下降沿时，函数将启动预设的定时器。定时器将运行一段预设的时间(TV)。只要定时器在计时或参数S返回信号状态“1”，参数Q的信号状态就为“1”。
+
+函数名称：CTU
+参数：
+- CU：Input，BOOL，计数输入，当CU的信号状态从“0”变为“1”时，执行计数操作。
+- R：Input，BOOL，复位输入，当R的信号状态为“1”时，计数器值将复位为“0”。
+- PV：Input，整数，置位输出的目标值，当计数器值大于或等于PV的值时，输出Q的信号状态为“1”。
+- Q：Output，BOOL，计数器状态，反映当前计数器值是否大于或等于PV的值。
+- CV：Output，整数、CHAR、WCHAR、DATE，当前计数器值。
+功能描述：CTU函数用于实现增计数功能，根据CU的上升沿触发计数，CV的值每次增加1，直到达到数据类型的上限。当计数器值大于或等于PV的值时，Q的信号状态为“1”。
+使用示例：
+SCL
+"IEC_COUNTER_DB".CTU(CU := "Tag_Start", R := "Tag_Reset", PV := "Tag_PresetValue", Q => "Tag_Status", CV => "Tag_CounterValue");
+备注：CTU函数支持的整数类型包括SINT、USINT、INT、UINT、DINT、UDINT等。
+
+函数名称：CTD
+参数：
+- CD：Input，BOOL，计数输入，当从“0”变为“1”时，执行减计数指令。
+- LD:  Input，BOOL，计数输入，执行装载输入。
+- PV：Input，整数，预设值，当前计数器值小于或等于此值时，Q输出为“1”。
+- Q：Output，BOOL，计数器状态，当前计数器值小于或等于PV时为“1”，否则为“0”。
+- CV：Output，整数，当前计数器值。
+
+函数名称：CTUD
+参数：
+- CU：Input，BOOL，加计数输入，当从“0”变为“1”时，执行加计数指令。
+- CD：Input，BOOL，减计数输入，当从“0”变为“1”时，执行减计数指令。
+- R：Input，BOOL，复位输入。
+- LD：Input，BOOL，装载输入，当为“1”时，将CV设置为PV的值。
+- PV：Input，整数，预设值，用于设置CV的值。
+- QU：Output，BOOL，加计数器状态，当前计数器值大于或等于PV时为“1”，否则为“0”。
+- QD：Output，BOOL，减计数器状态，当前计数器值小于或等于“0”时为“1”，否则为“0”。
+- CV：Output，整数，当前计数器值。
+功能描述：CTU用于加计数，CTD用于减计数，CTUD可以同时进行加计数和减计数。这些函数通过监测输入信号的变化来控制计数器的值，当计数器的值达到或超过预设值时，可以改变输出状态。
+
+函数名称：S_CU
+参数：
+- C_NO：Input，COUNTER、INT，计数器操作，计数器的数量取决于CPU。
+- CU：Input，BOOL，加计数输入，当CU的信号状态出现上升沿且当前计数器值小于999时，计数器值加1。
+- S：Input，BOOL，用于预置计数器的输入端，当S的信号状态出现上升沿时，计数器值将设置为PV的值。
+- PV：Input，WORD，预置BCD格式的计数器值（C#0至C#999）。
+- R：Input，BOOL，复位输入，当R的信号状态为1时，计数器值将被设置为0。
+- Q：Output，BOOL，计数器状态，当前计数器值不等于0时，Q为1。
+- CV：Output，WORD，当前计数器值（BCD格式）。
+
+函数名称：S_CD
+参数：
+- C_NO：Input，COUNTER、INT，指定计数器的编号，计数器的数量取决于CPU。
+- CD：Input，BOOL，减计数输入，当CD参数的信号状态从“0”变为“1”时，当前计数器值减1。
+- S：Input，BOOL，用于预置计数器的输入端，当S参数的信号状态从“0”变为“1”时，计数器值将设置为PV参数的值。
+- PV：Input，WORD，预置BCD格式的计数器值（C#0至C#999）。
+- R：Input，BOOL，复位输入，当R参数的信号状态变为“1”时，计数器值将设置为0。
+- Q：Output，BOOL，计数器状态指令，如果计数器值大于0，Q的信号状态为“1”，否则为“0”。
+- CV：Output，WORD，当前计数器值（十六进制）。
+- 函数值：WORD，当前计数器值（BCD格式）。
+功能描述：S_CD函数用于对计数器进行减计数操作，并能够预置计数器值和复位计数器。当计数器的值减到0时，将不再递减。
+
+函数名称：S_CUD
+参数：
+- C_NO：Input，COUNTER、INT，指定计数器的编号，计数器的数量取决于CPU。
+- CU：Input，BOOL，加计数输入，当CU参数的信号状态从“0”变为“1”时，当前计数器值加1。
+- CD：Input，BOOL，减计数输入，当CD参数的信号状态从“0”变为“1”时，当前计数器值减1。
+- S：Input，BOOL，用于预置计数器的输入端，当S参数的信号状态从“0”变为“1”时，计数器值将设置为PV参数的值。
+- PV：Input，WORD，预置BCD格式的计数器值（C#0至C#999）。
+- R：Input，BOOL，复位输入，当R参数的信号状态变为“1”时，计数器值将设置为0。
+- Q：Output，BOOL，计数器状态指令，如果计数器值大于0，Q的信号状态为“1”，否则为“0”。
+- CV：Output，WORD，当前计数器值（十六进制）。
+- 函数值：WORD，当前计数器值（BCD格式）。
+功能描述：S_CUD函数用于对计数器进行加/减计数操作，并能够预置计数器值和复位计数器。当计数器的值达到上限999时，将不再递增，达到下限0时，将不再递减。
+
+函数名称：TypeOf
+参数：
+- <操作数>：Input，二进制数、整数、浮点数、时间、日期和时间、字符串、VARIANT、ResolvedSymbol，用于查询的操作数。
+功能描述：TypeOf函数用于检查VARIANT或ResolvedSymbol变量所指向的变量的数据类型，可以比较块接口中声明的数据类型与其它变量的数据类型或一个直接数据类型，以确定它们是“相等”还是“不相等”。比较操作数可以是基本数据类型或PLC数据类型。该指令只能在IF或CASE指令中使用。
+
+函数名称：TypeOfElements
+参数：
+- <操作数>：Input，VARIANT，用于查询的操作数
+功能描述：检查VARIANT变量的ARRAY元素的数据类型，用于比较VARIANT变量的ARRAY元素的数据类型是否相等
+使用场景：在IF或CASE指令中比较VARIANT变量的ARRAY元素的数据类型
+
+函数名称：IS_ARRAY
+参数：
+- <操作数>：Input，VARIANT，为ARRAY查询的操作数
+功能描述：检查VARIANT是否指向ARRAY数据类型的变量
+使用场景：在IF指令中检查VARIANT是否指向ARRAY数据类型的变量
+
+函数名称：TypeOfDB
+参数：
+- <操作数>：Input，DB_ANY数据类型，用于查询DB的数据类型
+功能描述：查询某个数据块的数据类型
+使用场景：在IF或CASE指令中查询DB的数据类型，并进行比较操作
+
+函数名称：CountOfElements
+参数：
+- #Tag_VARIANTToArray：Input，VARIANT，指向一个ARRAY类型的变量。
+功能描述：返回VARIANT指向的ARRAY变量的元素数量。
+
+函数名称：TypeOfDB
+参数：
+- #InputDBAny：Input，DB_ANY，指向要查询的数据块。
+功能描述：返回#InputDBAny指向的数据块的数据类型。
+
+函数名称：ABS
+参数：
+- <操作数>：Input，SINT、INT、DINT、浮点数，要计算绝对值的表达式。
+功能描述：计算输入值的绝对值。
+
+函数名称：MIN
+参数：
+- IN1：Input，整数、浮点数、TIME、TOD、DATE、DTL，第一个输入值。
+- IN2：Input，整数、浮点数、TIME、TOD、DATE、DTL，第二个输入值。
+- INn：Input，整数、浮点数、TIME、TOD、DATE、DTL，其他输入值。
+功能描述：比较所有输入值，返回最小的值。
+
+函数名称：MAX
+参数：
+- IN1：Input，整数、浮点数、TIME、TOD、DATE、DTL，第一个输入值
+- IN2：Input，整数、浮点数、TIME、TOD、DATE、DTL，第二个输入值
+- INn：Input，整数、浮点数、TIME、TOD、DATE、DTL，其它插入的输入（其值待比较）
+- 函数值：整数、浮点数、TIME、TOD、DATE、DTL，指令的结果
+功能描述：比较输入值，并将最大值复制到结果中
+
+函数名称：LIMIT
+参数：
+- IN：Input，将被限制的值
+- MN：Input，下限值
+- MX：Input，上限值
+- 函数值：结果为IN参数的值，如果IN小于MN，结果为MN；如果IN大于MX，结果为MX
+功能描述：将IN的值限制在MN和MX之间，返回限制后的值或原始值
+错误处理：如果MN大于MX，则ENO输出为“0”，表示错误
+
+函数名称：SQR
+参数：
+- <表达式>：Input，浮点数，存储区为I、Q、M、D、L、P，作为输入值。
+- 函数值：浮点数，存储区为I、Q、M、D、L、P，作为输入值的平方。
+功能描述：SQR函数用于计算输入值的平方值。
+
+函数名称：SQRT
+参数：
+- <表达式>：Input，浮点数，输入值
+功能描述：计算输入值的平方根，并将结果保存到指定的操作数中。如果输入值大于零，则结果为正数；如果输入值小于零，则返回无效浮点数；如果输入值为零，则结果为零。
+
+函数名称：LN
+参数：
+- <表达式>：Input，浮点数，输入值
+功能描述：计算输入值的自然对数（以e为底），并将结果保存到指定的操作数中。如果输入值大于零，则结果为正数；如果输入值小于零，则返回无效浮点数。
+
+函数名称：EXP
+参数：
+- <表达式>：Input，浮点数，输入值
+功能描述：通过底数e及输入值来计算指数，并将结果保存到指定的操作数中。
+
+函数名称：COS
+参数：
+- <表达式>：Input，浮点数，输入值（采用弧度形式的角度值）
+功能描述：计算输入值的余弦值。
+
+函数名称：SIN
+参数：
+- <表达式>：Input，浮点数，输入值（采用弧度形式的角度值）
+函数值：浮点数，指令的结果
+功能描述：计算输入值的正弦值。
+
+函数名称：TAN
+参数：
+- <表达式>：Input，浮点数，输入值（采用弧度形式的角度值）
+函数值：浮点数，指令的结果
+功能描述：计算输入值的正切值。
+
+函数名称：ASIN
+参数：
+- <表达式>：Input，浮点数，正弦值
+函数值：浮点数，角度值（弧度形式）
+功能描述：计算正弦值所对应的角度值。
+
+函数名称：ACOS
+参数：
+- <表达式>：Input，浮点数，余弦值
+函数值：浮点数，角度值（弧度形式）
+功能描述：计算余弦值所对应的角度值。
+
+函数名称：ATAN
+参数：
+- <表达式>：Input，浮点数，正切值
+函数值：浮点数，角度值（弧度形式）
+功能描述：计算正切值所对应的角度值。
+
+函数名称：ACOS
+参数：
+- <表达式>：Input，浮点数，作为需要计算的反余弦值。
+函数值：浮点数，表示角度值（以弧度为单位），范围在 -π/2 到 +π/2 之间。
+功能描述：ACOS函数用于计算给定浮点数的反余弦值。
+
+函数名称：FRAC
+参数：
+- <表达式>：Input，浮点数，需要提取小数位的数值。
+- <数据类型>：可选，用于明确指定函数的数据类型，默认为REAL。
+函数值：浮点数，表示输入值的小数位。
+功能描述：FRAC函数用于返回数值的小数位。
+
+函数名称：Deserialize
+参数：
+- SRC_ARRAY：Input，ARRAY[*] of BYTE或ARRAY of CHAR，I、Q、D、FB的块接口，用于保存其数据流将取消序列化的ARRAY of BYTE或ARRAY of CHAR。
+- DEST_VARIABLE：InOut，所有数据类型，I、Q、D、FB的块接口，无I/O数据已取消序列化数据待写入的目标变量。
+- POS：InOut，DINT，I、Q、M、D、L，POS参数中的操作数将根据转换后客户数据所占用的字节数，存储第一个字节的下标。POS参数将从0开始计算。
+- OUT：INT，错误信息
+规则：
+- SRC_ARRAY和DEST_VARIABLE的存储区不能重叠。
+- SRC_ARRAY参数处的变量必须在一个标准访问块中。
+- SRC_ARRAY参数中的VARIANT数据类型不能包含一个ZERO指针。
+- SRC_ARRAY参数中的引用必须有效。
+- SRC_ARRAY参数必须有足够的可用存储空间。
+- SRC_ARRAY参数中的数据类型必须有效。
+- NULL指针不能在DEST_VARIABLE参数处传递。
+- DEST_VARIABLE参数中的引用必须有效。
+- POS参数的值不能超出数组的限值。
+功能描述：Deserialize函数主要用于将序列化的数据流转换回其原始数据结构，即将ARRAY of BYTE或ARRAY of CHAR中的数据取消序列化后写入目标变量。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"80B0"表示"参数SRC_ARRAY和DEST_VARIABLE的存储区重叠"；"8136"表示"SRC_ARRAY参数处的存储区访问无效"；"8150"表示"SRC_ARRAY参数中的VARIANT数据类型包含一个ZERO指针"等。
+使用示例：
+SCL
+#Tag_RetVal := Deserialize(SRC_ARRAY := "Buffer".Field, DEST_VARIABLE := "Target".Client, POS := #BufferPos);
+
+函数名称：Serialize
+参数：
+- SRC_VARIABLE：Input，所有数据类型，待序列化的变量。
+- DEST_ARRAY：InOut，ARRAY of BYTE 或 ARRAY of CHAR，用于存储所生成数据流的ARRAY。
+- POS：InOut，DINT，POS参数处的操作数，存储第一个字节的下标。POS参数将从0开始计算。
+- OUT：INT，错误信息
+功能描述：Serialize函数用于将多个PLC数据类型(UDT)、STRUCT或ARRAY of <数据类型>转换为顺序表示，而不会丢失结构部分。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"80B0"表示"参数SRC_VARIABLE和DEST_ARRAY的存储区重叠"；"8151"表示"SRC_VARIABLE参数中的引用无效"；"8382"表示"POS参数的值超出数组的限值"等。
+使用示例：
+SCL
+#Tag_RetVal := Serialize(SRC_VARIABLE := "Source".Client, DEST_ARRAY := "Buffer".Field, POS := #BufferPos);
+#Label := STRING_TO_WSTRING('arti');
+#Tag_RetVal := Serialize(SRC_VARIABLE := #Label, DEST_ARRAY := "Buffer".Field, POS := #BufferPos);
+
+函数名称：MOV_BLK
+参数：
+- IN ：Input，DATE、CHAR、WCHAR、TOD，待复制源区域中的首个元素
+- COUNT：Input，UDINT，UINT，要从源范围复制到目标范围的元素个数。
+- OUT：DATE、CHAR、WCHAR、TOD，源范围内容要复制到的目标范围中的首个元素
+功能描述：MOV_BLK函数用于将源数组中的数据复制到目标数组中，可以从源数组的任意位置开始复制任意数量的元素到目标数组的任意位置。仅当源范围和目标范围的数据类型相同时，才能执行该指令。
+例如：MOVE_BLK(IN := #a_array[2],
+ COUNT := "Tag_Count",
+ OUT => #b_array[1]);
+
+函数名称：MOVE_BLK_VARIANT
+参数：
+- SRC：Input，VARIANT（指向一个 ARRAY 或一个 ARRAY 元素），ARRAY of <数据类型>，L（可在块接口的“Input”、“InOut”和“Temp”部分进行声明），待复制的源块
+- COUNT：Input，UDINT，I、Q、M、D、L，已复制的元素数目。如果参数 SRC 或参数 DEST 中未指定任何 ARRAY，则将参数 COUNT 的值设置为“1”。
+- SRC_INDEX：Input，DINT，I、Q、M、D、L，定义要复制的第一个元素：
+- SRC_INDEX 参数将从 0 开始计算。如果参数 SRC 中指定了 ARRAY，则参数 SRC_INDEX 中的整数将指定待复制源区域中的第一个元素。而与所声明的 ARRAY 限值无关。如果 SRC 参数中未指定 ARRAY 或者仅指定了 ARRAY 的某个元素，则将 SRC_INDEX 参数的值赋值为“0”。
+- DEST_INDEX：Input，DINT，I、Q、M、D、L，定义了目标存储区的起点：DEST_INDEX 参数将从 0 开始计算。如果参数 DEST 中指定了 ARRAY，则参数 DEST_INDEX 中的整数将指定待复制目标范围中的第一个元素。而与所声明的 ARRAY 限值无关。如果参数 DEST 中未指定任何 ARRAY，则将参数 DEST_INDEX 赋值为“0”。
+- DEST：Output，VARIANT，L（可在块接口的“Input”、“InOut”和“Temp”部分进行声明），源块中内容将复制到的目标区域。
+- 返回值：INT，I、Q、M、D、L，错误信息
+功能描述：MOVE_BLK_VARIANT 函数用于将一个存储区（源范围）的数据移动到另一个存储区（目标范围）中。可以将一个完整的 ARRAY 或 ARRAY 的元素复制到另一个相同数据类型的 ARRAY 中。源 ARRAY 和目标 ARRAY 的大小（元素个数）可能会不同。可以复制一个 ARRAY 内的多个或单个元素。要复制的元素数量不得超过所选源范围或目标范围。如果在创建块时使用该指令，则无需确定该 ARRAY，源和目标将使用 VARIANT 进行传输。无论后期如何声明该 ARRAY，参数 SRC_INDEX 和 DEST_INDEX 始终从下限“0”开始计数。如果复制的数据多于可用的数据，则不执行该指令。参数 SRC 的数据类型不能为 BOOL 和 BOOL 型 ARRAY。
+
+函数名称：UMOVE_BLK
+参数：
+- IN：Input，二进制数、整数、浮点数、定时器、DATE、CHAR、WCHAR、TOD类型，待复制源区域中的首个元素。
+- COUNT：Input，USINT、UINT、UDINT、ULINT，要从源范围复制到目标范围的元素个数。
+- OUT：Output，二进制数、整数、浮点数、定时器、DATE、CHAR、WCHAR、TOD类型，源范围内容要复制到的目标范围中的首个元素。
+功能描述：UMOVE_BLK函数用于将一个存储区（源范围）的数据移动到另一个存储区（目标范围）中，且该指令不可中断。使用参数COUNT可以指定将移动到目标范围中的元素个数。待移动元素的宽度由源区域中第一个元素的宽度决定。仅当源范围和目标范围的数据类型相同时，才能执行该指令。
+例如：UMOVE_BLK(IN := #a_array[2], COUNT := "Tag_Count" OUT => #barray[1]);
+
+函数名称：FILL_BLK
+参数：
+- IN：Input，二进制数、整数、浮点数、定时器、TOD、DATE、CHAR、WCHAR类型，用于填充目标范围的元素。
+- COUNT：Input，USINT、UINT、UDINT、ULINT，移动操作的重复次数。
+- OUT：Output，二进制数、整数、浮点数、定时器、TOD、DATE、CHAR、WCHAR类型，目标范围中填充的起始地址。
+功能描述：FILL_BLK函数用于用IN输入的值填充一个存储区域（目标范围）。从输出OUT指定的地址开始填充目标范围。可以使用参数COUNT指定复制操作的重复次数。执行该指令时，输入IN中的值将移动到目标范围，重复次数由参数COUNT的值指定。仅当源范围和目标范围的数据类型相同时，才能执行该指令。
+例如：FILL_BLK(IN := #FillValue,
+ COUNT := "Tag_Count",
+ OUT => #TargetArea[1]);
+
+函数名称：UFILL_BLK
+参数：
+- IN：Input，可以是二进制数、整数、浮点数、定时器、DATE、CHAR、WCHAR、TOD类型，用于填充目标范围的元素。
+- COUNT：Input，可以是USINT、UINT、UDINT、ULINT类型，表示移动操作的重复次数。
+- OUT：Output，可以是二进制数、整数、浮点数、定时器、TOD、DATE、CHAR、WCHAR类型，表示目标范围中填充的起始地址。
+功能描述：UFILL_BLK函数用于将IN参数的值填充到从OUT参数指定的地址开始的目标范围内，填充次数由COUNT参数指定，且该操作不可中断。
+
+函数名称：SCATTER
+参数：
+- IN：Input，BYTE、WORD、DWORD、LWORD，所解析的位序列。这些值不得位于I/O区域或工艺对象的DB内。
+- OUT：Output，ARRAY[*] of BOOL、STRUCT或PLC数据类型，保存ARRAY、STRUCT或PLC数据类型中的各个位。
+功能描述：SCATTER函数用于将BYTE、WORD、DWORD或LWORD数据类型的ARRAY分解为单个位，并保存在元素类型仅为布尔型的ARRAY of BOOL、匿名STRUCT或PLC数据类型中。
+错误处理：无特定错误代码，但如果使能输入EN的信号状态为“0”，或源ARRAY中的元素数量少于COUNT_IN参数中的指定数量，或目标ARRAY的索引不以BYTE、WORD、DWORD或LWORD限制开始，使能输出ENO将返回信号状态“0”。
+使用示例：
+SCL
+SCATTER(IN := #SourceWord, OUT => #DestinationArray);
+备注：SCATTER函数的可用性依赖于CPU的固件版本，S7-1200系列CPU需V4.2及以上版本，S7-1500系列CPU需V2.1及以上版本。
+
+函数名称：SCATTER_BLK
+参数：
+- IN：Input，ARRAY[*] of BYTE、WORD、DWORD，待解析的ARRAY of <位序列>。
+- COUNT_IN：Input，USINT、UINT、UDINT、ULINT，对待解析源ARRAY中的元素数量进行计数。
+- OUT：Output，ARRAY[*] of BOOL、STRUCT、PLC数据类型，保存ARRAY、STRUCT或PLC数据类型中的各个位。
+功能描述：SCATTER_BLK函数用于将源ARRAY中的数据解析为单个位，并将这些位保存到目标ARRAY中。
+错误处理：如果使能输入EN的信号状态为“0”，或源ARRAY中的元素数量少于COUNT_IN参数中的指定数量，或目标ARRAY的索引不以BYTE、WORD、DWORD或LWORD限制开始，或ARRAY[*] of BOOL、STRUCT或PLC数据类型未提供所需的元素数量，则使能输出ENO将返回信号状态“0”。
+使用示例：
+SCL
+SCATTER_BLK(IN := #SourceArrayWord[2], COUNT_IN := #CounterInput, OUT => #DestinationArrayBool[0]);
+备注：目标ARRAY的数据类型必须为ARRAY[*] of BOOL、STRUCT或PLC数据类型，且其元素数量必须等于COUNT_IN指定的数量。
+
+函数名称：GATHER
+参数：
+- IN：Input，ARRAY[*] of BOOL、STRUCT 或 PLC 数据类型，用于指定源数据，数据类型中的各个位将组合为一个位序列。
+- OUT：Output，BYTE、WORD、DWORD、LWORD，用于存储组合后的位序列。
+功能描述：GATHER函数用于将源数据中的各个位组合为一个位序列并存储在目标变量中。
+使用示例：
+SCL
+GATHER(IN := #SourceArray, OUT => #DestinationWord);
+备注：
+- ARRAY、STRUCT 或 PLC 数据类型中包含的元素数目必须恰好等于位序列指定的数量。
+- 该指令的可用性依赖于固件版本，S7-1200系列CPU需V4.2及以上版本，S7-1500系列CPU需V2.1及以上版本。
+- 如果使能输入EN的信号状态为“0”或源ARRAY的下标不能以BYTE、WORD、DWORD或LWORD限值开始，使能输出ENO将返回信号状态“0”。
+
+函数名称：GATHER_BLK
+参数：
+- IN：Input，ARRAY[*]的元素，可以是BOOL、STRUCT或PLC数据类型，作为待组合的位的源ARRAY。
+- COUNT_OUT：Input，USINT、UINT、UDINT或ULINT，指定目标ARRAY的元素数量。
+- OUT：Output，ARRAY[*]的元素，可以是BYTE、WORD、DWORD或LWORD，保存组合后的位序列的目标ARRAY。
+功能描述：GATHER_BLK函数用于将源ARRAY中的位组合到目标ARRAY中。它能够处理不同数据类型的源和目标ARRAY，以及不同范围的源ARRAY索引。
+错误处理：如果使能输入EN的信号状态为“0”，或源ARRAY的下标不能以BYTE、WORD、DWORD或LWORD限值开始，或ARRAY[*] of <位序列>中未提供所需的元素数量，则使能输出ENO将返回信号状态“0”。
+使用示例：
+SCL
+GATHER_BLK(IN := #SourceArrayBool[0], COUNT_OUT := #CounterOutput, OUT => #DestinationArrayWord[2]);
+备注：源ARRAY的数据类型和目标ARRAY的数据类型需要匹配，以便正确组合位序列。
+
+函数名称：AssignmentAttempt
+参数：
+- SRC：Input，VARIANT或DB_ANY，指向其地址待读取或为NULL的源变量的指针。
+- DST：Output，引用类型，根据SRC的类型决定，如果SRC为VARIANT，则DST可为位序列、整数、浮点数、字符串、PLC数据类型(UDT)、系统数据类型(SDT)、ARRAY of <已命名的数据类型>；如果SRC为DB_ANY，则DST为工艺对象。
+功能描述：AssignmentAttempt函数用于尝试将VARIANT或DB_ANY分配给一个引用。在运行时检查数据类型是否正确，如果正确则执行赋值，否则目标变量为NULL。
+使用示例：
+- 尝试将VARIANT分配给一个引用：`myReference := AssignmentAttempt(SRC := myVariant);`
+- 尝试将DB_ANY分配给一个工艺对象的引用：`myReferenceTO := AssignmentAttempt(SRC := myDB);`
+
+函数名称：SWAP
+参数：
+- <表达式>：Input，WORD、DWORD或LWORD，用于指定要交换的字节顺序的输入值。
+功能描述：SWAP函数用于更改输入值中字节的排列顺序，并将结果保存在指定的操作数中。
+使用示例：
+SCL
+"Tag_Result" := SWAP("Tag_Value");
+
+函数名称：ReadFromArrayDB
+参数：
+- DB：Input，DB_ANY，待读取的数据块。
+- INDEX：Input，DINT，DB中被读取的元素。
+- VALUE：Output，VARIANT，待读取并输出的值。
+函数的返回值：INT，指令的结果。
+功能描述：ReadFromArrayDB函数用于从索引引用的ARRAY DB块类型的数据块中读取元素，并将元素值写入目标范围。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"80B4"表示"存储在ARRAY数据块中的元素数据类型与VARIANT中传输的元素数据类型不匹配"；"8282"表示"INDEX参数的值超出ARRAY的限制"等。
+使用示例：
+SCL
+"TagResult" := ReadFromArrayDB(DB := "ArrayDB", INDEX := 2, VALUE => "TargetField");
+
+函数名称：WriteToArrayDB
+参数：
+- DB：Input，DB_ANY，待写入数据的数据块。
+- INDEX：Input，DINT，待写入数据的DB中的元素。
+- VALUE：Input，VARIANT，待写入的值。
+函数的返回值：INT，指令的结果。
+功能描述：WriteToArrayDB函数用于将索引引用的元素写入ARRAY DB块类型的数据块中。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"80B4"表示"存储在ARRAY数据块中的元素数据类型与VARIANT中传输的元素数据类型不匹配"。
+使用示例：
+（示例代码未在文本中提供，但通常形式为）
+SCL
+"TagResult" := WriteToArrayDB(DB := "ArrayDB", INDEX := 2, VALUE := "ValueToWrite");
+
+函数名称：ReadFromArrayDBL
+参数：
+- REQ：Input，BOOL，开始读取ARRAY数据块。
+- DB：Input，DB_ANY，待读取的ARRAY数据块。
+- INDEX：Input，DINT，DB中被读取的元素。
+- VALUE：InOut，VARIANT，指向待读取工作存储器中的DB的指针，并写入该工作存储器的值。
+- BUSY：Output，BOOL，仍在读取数组数据块。
+- DONE：Output，BOOL，该指令执行成功。
+- ERROR：Output，INT，错误信息。
+功能描述：ReadFromArrayDBL函数用于从装载存储器的ARRAY DB块类型的数据块中读取索引应用的元素并将其写入目标范围。
+错误处理：ERROR参数用于返回错误信息。例如，错误代码"80B4"表示"存储在ARRAY数据块中的元素数据类型与VARIANT中传输的元素数据类型不匹配"；"8382"表示"INDEX参数的值超出ARRAY的限制"；"8753"表示"VALUE参数的大小与ARRAY数据块中的元素长度不匹配"等。
+使用示例：
+SCL
+"ReadFromArrayDBL_DB"(REQ := "TagReg", DB := "ArrayDB", INDEX := 2, VALUE := "TargetField", BUSY => "TagBusy", DONE => "TagDone", ERROR => "TagError");
+
+函数名称：READ_DBL
+参数：
+- REQ：Input，BOOL，当检测到信号上升沿时，开始执行读取操作。
+- DB：Input，DB_ANY，指向待读取的ARRAY数据块。
+- INDEX：Input，DINT，指定待读取的ARRAY数据块中的元素索引。
+- VALUE：Input，VARIANT，指向待读取工作存储器中的DB的指针，并写入该工作存储器的值。
+- BUSY：Output，BOOL，指示操作是否仍在进行中。
+- DONE：Output，BOOL，指示操作是否成功完成。
+- ERROR：Output，INT，输出错误代码。
+功能描述：READ_DBL函数用于从ARRAY数据块中读取指定索引的元素数据。
+错误处理：ERROR参数返回错误代码，例如“80B4”表示数据类型不匹配，“8230”表示数据块编号不正确等。
+
+函数名称：WRITE_DBL
+参数：
+- REQ：Input，BOOL，当检测到信号上升沿时，开始执行写入操作。
+- DB：Input，DB_ANY，指向待写入的ARRAY数据块。
+- INDEX：Input，DINT，指定待写入的ARRAY数据块中的元素索引。
+- VALUE：Input，VARIANT，待写入的数据值。
+- BUSY：Output，BOOL，指示操作是否仍在进行中。
+- DONE：Output，BOOL，指示操作是否成功完成。
+- ERROR：Output，INT，输出错误代码。
+功能描述：WRITE_DBL函数用于向ARRAY数据块中写入指定索引的元素数据。
+错误处理：ERROR参数返回错误代码，例如“8753”表示VALUE参数的大小与ARRAY数据块中的元素长度不匹配等。
+
+函数名称：PEEK
+参数：
+- AREA：Input，BYTE，选择读取区域，可以是输入、输出、位存储区或数据块等。
+- DBNUMBER：Input，DINT或DB_ANY，如果AREA为DB，则为数据块编号，否则为“0”。
+- BYTEOFFSET：Input，DINT，待读取的地址，仅使用16个最低有效位。
+- <数据类型>：默认值BYTE，可以指定指令的数据类型。
+- 函数值：位字符串，指令的结果。
+功能描述：PEEK函数用于从指定的存储区域读取数据，可以不指定数据类型，默认为BYTE。
+
+函数名称：PEEK_BOOL
+参数：
+- AREA：Input，BYTE，选择区域：16#81（输入）、16#82（输出）、16#83（位存储区）、16#84（DB）、16#1（外设输入，仅S7-1500）。
+- DBNUMBER：Input，DINT或DB_ANYD，如果AREA=DB，则为数据块数量，否则为“0”。
+- BYTEOFFSET：Input，DINT，待读取的地址，仅使用16个最低有效位。
+- BITOFFSET：Input，INT，待读取的位。
+- 函数值：BOOL，指令的结果。
+功能描述：PEEK_BOOL函数用于读取指定区域中的存储位。
+规则：
+- 如果要读取输入、输出或位存储区中的存储位，则DBNUMBER必须为“0”，否则指令无效。
+
+函数名称：POKE
+参数：
+- AREA：Input，BYTE，选择区域：16#81（输入）、16#82（输出）、16#83（位存储区）、16#84（DB）、16#2（外设输出，仅S7-1500）。
+- DBNUMBER：Input，DINT或DB_ANYD，如果AREA=DB，则为数据块数量，否则为“0”。
+- BYTEOFFSET：Input，DINT，待写入的地址，仅使用16个最低有效位。
+- VALUE：Input，位序列，待写入的值。
+功能描述：POKE函数用于将值写入指定区域的存储地址。
+规则：
+- 如果要写入输入、输出或位存储区，则DBNUMBER必须为“0”，否则指令无效。
+
+函数名称：POKE_BOOL
+参数：
+- AREA：Input，BYTE，选择区域：16#81（输入）、16#82（输出）、16#83（位存储区）、16#84（DB）、16#2（外设输出，仅S7-1500）。
+- DBNUMBER：Input，DINT或DB_ANYD，如果AREA=DB，则为数据块数量，否则为“0”。
+- BYTEOFFSET：Input，DINT，待写入的地址，仅使用16个最低有效位。
+- BITOFFSET：Input，INT，待写入的位。
+- VALUE：Input，BOOL，待写入的值。
+功能描述：POKE_BOOL函数用于将值写入指定区域的存储位。
+规则：
+- 如果要写入输入、输出或位存储区中的存储位，则DBNUMBER必须为“0”，否则指令无效。
+
+函数名称：POKE_BLK
+参数：
+- AREA_SRC：Input，BYTE，源存储区选择区域：16#81（输入）、16#82（输出）、16#83（位存储区）、16#84（DB）。
+- DBNUMBER_SRC：Input，DINT、DB_ANY，如果AREA_SRC=DB，则为源存储区中的数据块数量，否则为“0”。
+- BYTEOFFSET_SRC：Input，DINT，源存储区中待写入的地址，仅使用16个最低有效位。
+- AREA_DEST：Input，BYTE，目标存储区选择区域：16#81（输入）、16#82（输出）、16#83（位存储区）、16#84（DB）。
+- DBNUMBER_DEST：Input，DINT、DB_ANY，如果AREA_DEST=DB，则为目标存储区中的数据块数量，否则为“0”。
+- BYTEOFFSET_DEST：Input，DINT，目标存储区中待写入的地址，仅使用16个最低有效位。
+- COUNT：Input，DINT，已复制的字节数目。
+功能描述：POKE_BLK函数用于在不指定数据类型的情况下将存储区写入不同的标准存储区中。如果要将存储地址写入输入、输出或位存储区，必须将DBNUMBER设置为“0”，否则指令无效。
+
+函数名称：READ_LITTLE
+参数：
+- SRC_ARRAY：Input，ARRAY of BYTE，待读取的存储区。
+- DEST_VARIABLE：Output，位字符串、整数、浮点数、TOD、DATE、CHAR、WCHAR，读取值。
+- POS：InOut，DINT，确定读取数据的起始位置。POS参数将从0开始计算。
+函数的返回值：INT，错误信息
+功能描述：READ_LITTLE函数用于从源ARRAY读取数据，并将其写入目标变量。该函数支持小端格式读取。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"80B4"表示"SRC_ARRAY参数的数据类型不是ARRAY of BYTE"；"8382"表示"POS参数的值超出ARRAY的限制"；"8383"表示"POS参数的值在ARRAY的限制范围内，但存储区的大小超出了ARRAY的上限"。
+
+函数名称：WRITE_LITTLE
+参数：
+- SRC_VARIABLE：Input，位字符串、整数、浮点数、TOD、DATE、CHAR、WCHAR类型，写入其数据的变量。
+- DEST_ARRAY：InOut，ARRAY of BYTE类型，待写入数据的存储区。
+- POS：InOut，DINT，确定写入数据的起始位置。POS参数将从0开始计算。
+函数的返回值：INT，错误信息
+功能描述：WRITE_LITTLE函数主要用于将变量SRC_VARIABLE的值以小端格式写入到DEST_ARRAY存储区中指定的位置。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"80B4"表示"SRC_ARRAY参数的数据类型不是ARRAY of BYTE"。错误代码"8382"表示"POS参数的值超出ARRAY的限制"。错误代码"8383"表示"POS参数的值在ARRAY的限制范围内，但存储区的大小超出了ARRAY的上限"。
+使用示例：
+SCL
+#TagResult := WRITE_LITTLE(SRC_VARIABLE := #DINTVariable, DEST_ARRAY := #TargetField, POS := #TagPos);
+
+函数名称：WRITE_BIG
+参数：
+- SRC_VARIABLE：Input，位字符串、整数、浮点数、TOD、DATE、CHAR、WCHAR，写入其数据的变量。
+- DEST_ARRAY：InOut，ARRAY of BYTE，待写入数据的存储区。
+- POS：InOut，DINT，确定写入数据的起始位置。POS参数将从0开始计算。
+函数的返回值：INT，错误信息
+功能描述：WRITE_BIG函数用于将SRC_VARIABLE中的数据以大端格式写入DEST_ARRAY存储区，从POS参数指定的起始位置开始。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"80B4"表示"SRC_ARRAY参数的数据类型不是ARRAY of BYTE"；"8382"表示"POS参数的值超出ARRAY的限制"；"8383"表示"POS参数的值在ARRAY的限制范围内，但存储区的大小超出了ARRAY的上限"。
+
+函数名称：VariantGet
+参数：
+- SRC：Input，VARIANT，待读取的变量。
+- DST：Output，位字符串、整数、浮点数、定时器、日期时间、字符串、ARRAY元素、PLC数据类型，指令的结果。
+功能描述：VariantGet函数用于读取SRC参数的VARIANT指向的变量值，并将其写入DST参数的变量。
+
+函数名称：VariantPut
+参数：
+- SRC：Input，位字符串、整数、浮点数、定时器、日期时间、字符串、ARRAY元素、PLC数据类型，待读取的变量。
+- DST：Input，VARIANT，指令的结果。
+功能描述：VariantPut函数用于将SRC参数的变量值写入VARIANT所指向的DST参数存储区中。
+
+函数名称：CountOfElements
+参数：
+- ARRAY：Input，VARIANT，指向要获取元素个数的ARRAY。
+函数的返回值：INT，ARRAY元素的个数或错误信息。
+功能描述：CountOfElements函数用于查询VARIANT指针所包含的ARRAY元素数量。如果是一维ARRAY，则输出ARRAY元素的个数。如果是多维ARRAY，则输出所有维的数量。
+错误处理：如果VARIANT指针不指向ARRAY，或者数据块中的ARRAY被写保护，RET_VAL将返回"0"。
+
+函数名称：ResolveSymbols
+参数：
+- execute：Input，BOOL，当该操作数的信号状态更改为“1”时，指令开始执行。
+- firstIndex：Input，DINT，定义要解析的第一个符号索引。
+- lastIndex：Input，DINT，定义要解析的最后一个符号索引。
+- done：Output，BOOL，指令执行完成后，该参数值在一个周期内为1。
+- busy：Output，BOOL，指令正在执行时，该参数值为1。
+- error：Output，BOOL，执行过程中出错时，该参数值为1。
+- status：Output，INT，块状态/错误代码。
+- nameList：InOut，WSTRING数组，待解析的变量名称列表。
+- referenceList：InOut，ResolvedSymbol数组，引用列表。
+功能描述：ResolveSymbols函数用于解析参数"nameList"中的变量名称，并将变量引用写入参数"referenceList"中的操作数。该指令在执行完成后，"done"参数值将在一个周期内为1。
+错误处理：通过"status"参数返回错误信息。例如，错误代码"80B3"表示"firstIndex"参数的值大于"lastIndex"参数的值；"80B4"表示"referenceList"和"nameList"的ARRAY限值不同等。
+使用示例：
+SCL
+"ResolveSymbols_DB"(execute := #Input_Execute,
+                    firstIndex := 0,
+                    lastIndex := 9,
+                    done => #Output_Done,
+                    busy => #Output_Busy,
+                    error => _bool_out_,
+                    status => _int_out_,
+                    nameList := "MySrcDB".InOut_Symbols,
+                    referenceList := "MyTargetDB".InOut_ResolvedSymbols);
+
+函数名称：MoveFromResolvedSymbol
+参数：
+- SRC：Input，ResolvedSymbol类型，指向PLC程序中读取的变量，即源变量。源变量之前必须已使用“ResolveSymbols”指令解析。
+- DST：Output，VARIANT类型，指向写入的变量，即目标变量。
+函数的返回值：INT，错误信息
+功能描述：将源变量引用的变量值读取出来，并写入目标变量中，两个变量的数据类型必须相同。
+错误处理：RET_VAL参数返回错误信息。错误代码同MoveToResolvedSymbol函数。
+使用示例：
+SCL
+MoveFromResolvedSymbol(SRC := "MySrcDB".Input_ResolvedSymbol, DST => "MyTargetDB".Output_Variant);
+
+函数名称：MoveResolvedSymbolsToBuffer
+参数：
+- firstIndex：Input，DINT，目标缓冲区中待写入的第一个已解析符号的索引。
+- lastIndex：Input，DINT，目标缓冲区中待写入的最后一个已解析符号的索引。
+- src：Input，Array of ResolvedSymbol，用作读取数值的源缓冲区。
+- dstOffsets：Input，Array of DINT，源缓冲区中数值的偏移量。
+- mode：Input，DWORD，存储器格式（2#0 = Big-Endian，2#1 = Little-Endian）。
+- dst：InOut，Array of Byte，包含对已解析符号的引用的目标缓冲区。
+- status：InOut，Array of Int，包含各个待写入值的复制状态。
+函数的返回值：INT，错误信息
+功能描述：MoveResolvedSymbolsToBuffer函数用于将已解析符号的值复制到目标缓冲区中。通过使用firstIndex和lastIndex参数限制需复制的变量数，使用mode参数定义存储器格式，使用dstOffsets参数指定偏移量来确定读取和写入的位置。
+错误处理：status参数和RET_VAL用于返回错误信息。例如，错误代码"8020"表示"符号未解析"；"8034"表示"数据块处于写保护状态"；"8085"表示"偏移量的起始位位置不可被8整除"等。
+使用示例：
+SCL
+MoveResolvedSymbolsToBuffer(firstIndex := 2, lastIndex := 7, src := "MySrcDB".Input_ResolvedSymbols, dstOffsets := #Input_Offset, mode := 2#0, dst := "MyTargetDB".InOut_Buffer, status := #InOut_Status);
+
+函数名称：MoveResolvedSymbolsFromBuffer
+参数：
+- firstIndex：Input，定义需在目标缓冲区中写入其值的第一个变量索引。
+- lastIndex：Input，定义需在目标缓冲区中写入其值的最后一个变量索引。
+- mode：Input，定义操作模式。
+- src：Input，ARRAY[0..99] of Byte，源缓冲区中的数据。
+- srcOffsets：Input，ARRAY[0..99] of Dint，用于确定在源缓冲区中读取数值的位置的偏移量。
+- dst：Output，ARRAY[0..99] of ResolvedSymbol，目标缓冲区，将存储从源缓冲区读取的变量值。
+- status：InOut，ARRAY[0..99] of Int，用于返回操作的状态。
+错误处理：
+- src: 数据类型无效 (错误代码 8454)。
+- srcOffsets: 数据块不存在 (错误代码 8531)；数据块仅在装载存储器中可用，不能通过指令寻址 (错误代码 8533)；数据类型无效 (错误代码 8554)。
+- dst: 数据块不存在 (错误代码 8631)；数据块仅在装载存储器中可用，不能通过指令寻址 (错误代码 8633)；数据块处于写保护状态 (错误代码 8634)；数据块不在优化的存储区中 (错误代码 8636)；数据类型无效 (错误代码 8654)。
+- status: 数据块不存在 (错误代码 8731)；数据块仅在装载存储器中可用，不能通过指令寻址 (错误代码 8733)；数据块处于写保护状态 (错误代码 8734)；数据块不在优化的存储区中 (错误代码 8736)；数据类型无效 (错误代码 8754)。
+功能描述：MoveResolvedSymbolsFromBuffer 函数用于将源缓冲区中的变量值读取出来，并写入到目标缓冲区的已解析符号中。它通过 firstIndex 和 lastIndex 参数限制写入的变量数，使用 srcOffsets 参数确定读取位置。
+使用示例：
+SCL
+MoveResolvedSymbolsFromBuffer(firstIndex := 2, lastIndex := 7, mode := 2#0, src := "MySrcDB".Input_Buffer, srcOffsets := #Input_Offset, dst := "MyTargetDB".InOut_ResolvedSymbols, status := #InOut_Status);
+
+函数名称：BLKMOV
+参数：
+- SRCBLK：Input，VARIANT，指定待移动的存储区（源区域）。
+- DSTBLK：Output，VARIANT，指定要将块移动到的存储区（目标区域）。
+函数的返回值：INT，错误信息
+规则：
+- 源区域和目标区域不得重叠。
+- 如果源区域小于目标区域，则将整个源区域的数据都写入到目标区域中，而目标区域的其余字节保持不变。
+- 如果目标区域小于源区域，将写满整个目标区域，忽略源区域的剩余字节。
+- 如果数据类型为BOOL的块被移动，则必须对变量进行绝对寻址，且为该区域指定的长度必须为8的倍数。
+- SRCBLK参数不支持WSTRING、WCHAR、BOOL、ARRAY of STRING、ARRAY of WSTRING和ARRAY of WCHAR数据类型。
+- DSTBLK参数不支持WSTRING、WCHAR、BOOL、ARRAY of STRING、ARRAY of WSTRING和ARRAY of WCHAR数据类型。
+功能描述：BLKMOV函数用于将一个存储区（源区域）的数据移动到另一个存储区（目标区域）中，移动操作沿地址升序方向执行。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"8092"表示源区域或目标区域只能位于装载存储中；"8152"表示SRCBLK参数不支持某些数据类型。
+使用示例：
+SCL
+"Tag_RetVal" := BLKMOV(SRCBLK := P#M100.0 BYTE 10, DSTBLK => P#DB1.DBX0.0 BYTE 10);
+备注：DSTBLK参数声明为Output，因为数据流入变量，但此变量本身在块接口中必须声明为InOut。
+
+函数名称：UBLKMOV
+参数：
+- SRCBLK：Input，VARIANT类型，指定待移动的存储区（源区域）。
+- DSTBLK：Output，VARIANT类型，指定要将块移动到的存储区（目标区域）。
+函数的返回值：INT，错误信息
+规则：
+- 源区域和目标区域不可以重叠。
+- 如果源区域小于目标区域，则将整个源区域的数据都写入到目标区域中，而目标区域的其余字节保持不变。
+- 如果目标区域小于源区域，将写满整个目标区域，忽略源区域的剩余字节。
+- 如果定义为形参的源区域或目标区域比SRCBLK或DSTBLK参数中所指定的源区域或目标区域小，则不传送任何数据。
+- 如果数据类型为BOOL的块被移动，则必须对变量进行绝对寻址，且为该区域指定的长度必须为8的倍数，否则不执行该指令。
+- 可以使用UBLKMOV指令移动最多16 KB大小的数据。
+
+函数名称：FILL_BLK
+参数：
+- BVAL：Input，VARIANT类型，指定存储区域（源区域），将使用该存储区域中的内容填充BLK参数中指定的目标区域。
+- BLK：Output，VARIANT类型，指定要使用源区域的数据填充的存储区。
+函数的返回值：INT，错误信息
+规则：
+- 源区域和目标区域不得重叠。
+- 如果要预设的目标区域不是输入参数BVAL长度的整数倍，目标区域仍然可写至最后一个字节。
+- 如果要预置的目标区域小于源区域，此功能仅复制可以写入目标区域的数据量。
+- 如果实际的目标或源区域小于源或目标区域分配的存储区（参数BVAL和BLK），则不传输任何数据。
+- 如果ANY指针（源或目标）为BOOL数据类型，则必须对其进行绝对寻址，且指定的长度必须能被8整除；否则将不会执行该指令。
+- 如果目标区域为STRING数据类型，则指令将写入包含管理信息在内的整个字符串。
+
+函数名称：FILL
+参数：
+- BVAL：Input，VARIANT，指定存储区域（源区域），将使用该存储区域中的内容填充BLK参数中指定的目标区域。
+- BLK：Output，VARIANT，指定要使用源区域的数据填充的存储区。
+函数的返回值：INT，错误信息
+规则：
+- 如果ANY指针（源或目标）为BOOL数据类型，则必须对其进行绝对寻址，且指定的长度必须能被8整除；否则将不会执行该指令。
+- 如果目标区域为STRING数据类型，则指令将写入包含管理信息在内的整个字符串。
+- 当将结构作为输入参数传送时，结构的长度应始终为偶数个字节。如果声明一个具有奇数个字节的结构，此结构还需要另一个字节的存储空间。
+功能描述：FILL函数用于将源区域的数据复制到目标区域。它能够处理不同类型的数据，并且可以根据需要进行绝对寻址和填充整个字符串。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"8092"表示"源或目标区域只能位于装载存储器中"；"8152"表示"BVAL参数不支持WSTRING、WCHAR、BOOL、ARRAY of STRING、ARRAY of WSTRING和ARRAY of WCHAR数据类型"；"8352"表示"BLK参数不支持WSTRING、WCHAR、BOOL、ARRAY of STRING、ARRAY of WSTRING和ARRAY of WCHAR数据类型"。
+使用示例：
+SCL
+"Tag_RetVal" := FILL(BVAL := P#M14.0 WORD 4, BLK => P#M100.0 WORD 10);
+备注：BLK参数声明为Output，因为数据流入变量。但此变量本身在块接口中必须声明为InOut。
+
+函数名称：ROUND
+参数：
+- <表达式>：Input，浮点数，要取整的输入值。
+功能描述：将输入值取整为最接近的整数。如果输入值恰好在偶数和奇数之间，则选择偶数。
+
+函数名称：CEIL
+参数：
+- <表达式>：Input，浮点数，输入值。
+- _<数据类型>：整数、浮点数，函数值的数据类型，默认为DINT。
+功能描述：将输入值取整为最近的较大整数。
+
+函数名称：FLOOR
+参数：
+- <表达式>：Input，浮点数，输入值。
+- _<数据类型>：整数、浮点数，函数值的数据类型，默认为DINT。
+功能描述：将输入值取整为最近的较小整数。
+
+函数名称：TRUNC
+参数：
+- <表达式>：Input，浮点数，输入值。
+- _<数据类型>：整数、浮点数，函数值的数据类型，默认为DINT。
+功能描述：直接从输入值中截取整数部分作为函数值返回，不包含小数位。
+
+函数名称：SCALE_X
+参数：
+- EN：Input，BOOL，使能输入
+- MIN：Input，整数、浮点数，取值范围的下限
+- VALUE：Input，浮点数，要缩放的值
+- MAX：Input，整数、浮点数，取值范围的上限
+- <_数据类型>：整数、浮点数，函数值的数据类型（默认：INT）
+- ENO：Output，BOOL，使能输出
+函数值：整数、浮点数，缩放的结果
+功能描述：缩放指令，用于将浮点数映射到指定的取值范围来进行缩放，结果为整数。
+
+函数名称：NORM_X
+参数：
+- MIN：Input，整数、浮点数，值范围的下限
+- VALUE：Input，浮点数，要标准化的值
+- MAX：Input，整数、浮点数，值范围的上限
+- <_数据类型>：浮点数，函数值的数据类型
+函数值：浮点数，标准化的结果
+功能描述：标准化指令，用于将输入VALUE中变量的值映射到线性标尺对其进行标准化。结果为浮点数，取决于要标准化的值在值范围中的位置。
+
+函数名称：SCALE_X_REAL
+参数：
+- MIN：Input，整数或浮点数，取值范围的下限。
+- VALUE：Input，整数或浮点数，要标准化的值。
+- MAX：Input，整数或浮点数，取值范围的上限。
+功能描述：SCALE_X_REAL函数用于将输入VALUE的值映射到一个由MIN和MAX定义的线性标尺上进行标准化。输出结果为浮点数，取决于要标准化的值在该值范围中的位置。
+错误处理：无特定错误代码，但若输入值不满足条件（如MIN大于等于MAX），则ENO输出将为0。
+使用示例：
+SCL
+"Tag_Result2" := SCALE_X_REAL(MIN := "Tag_Value1", VALUE := "Tag_Real", MAX := "Tag_Value2");
+
+函数名称：REF
+参数：
+- <表达式>：Input，位序列、BOOL除外、整数、浮点数、字符串、PLC数据类型(UDT)、系统数据类型(SDT)、ARRAY of <已命名的数据类型>，DB变量（已优化）、FB的块接口（已优化），引用将指向的变量。
+功能描述：REF函数用于声明一个引用，该引用指向一个指定的变量。
+规则：
+- 括号中指定的变量数据类型必须与所声明引用的数据类型完全匹配。
+- 指定为REF()参数的变量必须位于优化存储区内。
+- 该引用不得引用以下数据：临时数据(TEMP)、PLC变量表中的全局变量、块参数、常量、写保护的变量。
+- 数组限值、引用维数以及被引用的变量数必须相同。
+- 不支持Array[*]。
+- 必须使用以下语句创建基于PLC数据类型的ARRAY DB引用：REF("my_ArrayDB_UDT".THIS)、REF("my_ArrayDB_UDT"."THIS"[i])。
+
+函数名称：VARIANT_TO_DB_ANY
+参数：
+- IN：Input，VARIANT，待读取的变量（“DB_ANY_TO_VARIANT”指令的函数值）。IN参数处可使用全局变量或局部变量。
+- ERR：Output，INT，错误信息。
+函数的返回值：DB_ANY，结果：背景数据块的编号。
+功能描述：VARIANT_TO_DB_ANY函数用于查询IN参数地址指定的操作数的数据块编号，它可以是背景数据块或ARRAY数据块。
+错误处理：ERR参数用于返回错误信息。例如，错误代码"252C"表示"IN参数的VARIANT数据类型的值为'0'，并且CPU更改为STOP模式"；"80B4"表示"存储在ARRAY数据块中的元素数据类型与VARIANT中传输的元素数据类型不匹配"；"8130"表示"IN参数的数据类型为ANY"等。
+使用示例：
+SCL
+"OutputDBNumber" := VARIANT_TO_DB_ANY(IN := #tempVARIANT, ERR := "Tag_Error");
+
+函数名称：DB_ANY_TO_VARIANT
+参数：
+- IN：Input，DB_ANY，要读取其编号的数据块。
+- ERR：Output，INT，错误信息。
+函数的返回值：Output，VARIANT，数据块编号。
+功能描述：DB_ANY_TO_VARIANT函数用于从符合要求的数据块生成VARIANT变量。该函数读取DB_ANY类型参数IN指定的数据块的编号，并在RET_VAL中返回。
+错误处理：ERR参数用于返回错误信息。例如，错误代码"8130"表示"数据块的编号为“0”"；"8131"表示"数据块不存在、太短或位于装载存储器中"；"8132"表示"该数据块太短且不是ARRAY数据块"等。
+
+函数名称：SCALE
+参数：
+- IN：Input，INT，待缩放的输入值。
+- HI_LIM：Input，REAL，上限。
+- LO_LIM：Input，REAL，下限。
+- BIPOLAR：Input，BOOL，指示将参数IN的值解释为双极性还是单极性。
+- OUT：Output，REAL，指令的结果。
+函数的返回值：WORD，错误信息。
+功能描述：SCALE函数用于将参数IN上的整数转换为浮点数，该浮点数在介于上下限值之间的物理单位内进行缩放。
+错误处理：RET_VAL参数用于返回错误信息。例如，当IN的值大于HI_LIM或小于LO_LIM时，将输出错误。
+
+函数名称：UNSCALE
+参数：
+- IN：Input，REAL，待取消缩放并转换为整数的输入值。
+- HI_LIM：Input，REAL，上限。
+- LO_LIM：Input，REAL，下限。
+- BIPOLAR：Input，BOOL，指示将参数IN的值解释为双极性还是单极性。1代表双极性，0代表单极性。
+- OUT：Output，INT，指令的结果。
+函数的返回值：WORD，错误信息。
+功能描述：UNSCALE函数用于根据给定的上下限和极性，将缩放后的输入值取消缩放并转换为整数。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"0008"表示参数IN的值超出范围。
+
+函数名称：SCALE
+参数：
+- IN：Input，实数，代表输入值，需要被缩放。
+- HI_LIM：Input，实数，代表量程上限。
+- LO_LIM：Input，实数，代表量程下限。
+- BIPOLAR：Input，整数，代表输入值是否为双极性，1代表是，0代表否。
+- OUT：Output，整数，代表缩放后的输出值。
+函数的返回值：Output，整数，代表错误信息。
+功能描述：SCALE函数用于将输入值IN按照指定的量程上下限HI_LIM和LO_LIM以及是否为双极性BIPOLAR进行缩放，结果输出到OUT。
+错误处理：RET_VAL参数用于返回错误信息。
+使用示例：
+```
+"Tag_Result" := SCALE(IN := "Tag_InputValue", HI_LIM := "Tag_HighLimit", LO_LIM := "Tag_LowLimit", BIPOLAR := "Tag_Bipolar", OUT => "Tag_Result");
+```
+
+函数名称：IF
+参数：
+- <条件>：BOOL，代表需要评估的条件表达式。
+- <指令>：代表在满足条件时需要执行的指令序列。
+功能描述：IF函数用于根据条件控制程序流的分支。如果条件为TRUE，则执行THEN后面的指令；如果为FALSE，则执行ELSE后面的指令或者跳过THEN后面的指令。
+使用示例：
+```
+IF "Tag_1" = 1 THEN
+    "Tag_Value" := 10;
+ELSIF "Tag_2" = 1 THEN
+    "Tag_Value" := 20;
+ELSIF "Tag_3" = 1 THEN
+    "Tag_Value" := 30;
+ELSE
+    "Tag_Value" := 0;
+END_IF;
+```
+
+函数名称：CASE
+参数：
+- <Tag>：位字符串、整数I、Q、M、D、L，与设定的常数值进行比较的值。
+- <常数>：局部常量和全局常量，用于与<Tag>进行比较的常数值。可以是位字符串、整数、范围或枚举。
+- <Instruction>：当表达式的值等于某个常数值时，将执行的指令。如果不满足条件，则执行ELSE后的指令。
+功能描述：CASE函数用于根据<Tag>的值执行不同的指令。如果<Tag>的值等于某个<常数>，则执行对应的<Instruction>。如果所有比较都不相等，则执行ELSE后的<Instruction>（如果存在）。
+
+函数名称：FOR
+参数：
+- <执行变量>：SINT、INT、DINT、USINT、UINT、UDINT，执行循环时会计算其值的操作数。执行变量的数据类型将确定其它参数的数据类型。
+- <起始值>：SINT、INT、DINT、USINT、UINT、UDINT，表达式，在执行变量首次执行循环时，将分配表达式的值。
+- <结束值>：SINT、INT、DINT、USINT、UINT、UDINT，表达式，在运行程序最后一次循环时会定义表达式的值。
+- <Increment>：SINT、INT、DINT、USINT、UINT、UDINT，执行变量在每次循环后都会递增（正增量）或递减（负增量）其值的表达式。如果未指定增量，则在每次循环后执行变量的值加1。
+- <指令>：只有运行变量的值在取值范围内，每次循环都就会执行的指令。取值范围由起始值和结束值定义。
+
+函数名称：WHILE
+参数：
+- <条件>：BOOL，表达式，每次执行循环之前都需要进行求值。
+- <指令>：在满足条件时，要执行的指令。如果不满足条件，则程序将从END_WHILE后继续执行。
+
+函数名称：REPEAT
+参数：
+- <指令>：在设定条件的值为FALSE时执行的指令。即使满足终止条件，此指令也只执行一次。
+- <条件>：BOOL，表达式，每次执行循环之后都需要进行求值。如果表达式的值为FALSE，则将再次执行程序循环。如果表达式的值为TRUE，则程序循环将从END_REPEAT后继续执行。
+
+函数名称：CONTINUE
+说明：使用“复查循环条件”指令，可以结束FOR、WHILE或REPEAT循环的当前程序运行。执行该指令后，将再次计算继续执行程序循环的条件。该指令将影响其所在的程序循环。
+
+函数名称：REPEAT...UNTIL
+参数：
+- 无
+功能描述：REPEAT...UNTIL循环用于重复执行一个语句块直到指定的条件为真。在每次迭代结束时检查条件。
+
+函数名称：RETURN
+参数：
+- 无
+功能描述：RETURN语句用于退出当前块，并返回到块的调用点继续执行。
+
+函数名称：REGION
+参数：
+- <名称>：字符串，用于标识REGION的文本。
+- <指令>：字符串，代表REGION前后的程序代码。
+主要作用场景：在SCL块中构建程序代码，并将其分为几个不同的区域。
+
+函数名称：END_REGION
+参数：无
+主要作用场景：标记REGION的结束。
+
+函数名称：ENDIS_PW
+参数：
+- REQ：Input，BOOL，决定CPU中各访问级别的当前密码状态或锁定/解锁CPU各访问级别的密码。
+- F_PWD：Input，BOOL，锁定或解锁访问级别“完全访问权限，包括故障安全（无保护）”的密码。
+- FULL_PWD：Input，BOOL，锁定或解锁访问级别“完全访问权限（无保护）”的密码。
+- R_PWD：Input，BOOL，锁定或解锁访问级别“只读访问权限”的密码。
+- HMI_PWD：Input，BOOL，锁定或解锁访问级别“HMI访问权限”的密码。
+- F_PWD_ON：Output，BOOL，访问级别“完全访问权限，包括故障安全（无保护）”的当前密码状态。
+- FULL_PWD_ON：Output，BOOL，访问级别“完全访问权限（无保护）”的当前密码状态。
+- R_PWD_ON：Output，BOOL，访问级别“只读访问权限”的当前密码状态。
+- HMI_PWD_ON：Output，BOOL，访问级别“HMI访问权限”的当前密码状态。
+函数的返回值：WORD，错误信息
+功能描述：ENDIS_PW函数用于在CPU中锁定或解锁各访问级别的密码，防止未授权的访问。
+错误处理：RET_VAL参数返回错误信息。例如，错误代码"8090"表示"不支持ENDIS_PW指令"；"80D0"表示"访问级别未组态密码，信号状态必须为TRUE"等。
+使用示例：
+SCL
+"Tag_Result" := ENDIS_PW(REQ := 0, F_PWD := 0, FULL_PWD := 0, R_PWD := 1, HMI_PWD := 0, F_PWD_ON => "Status_F_PWD", FULL_PWD_ON => "Status_FULL_PWD", R_PWD_ON => "Status_R_PWD", HMI_PWD_ON => "Status_HMI_PWD");
+
+函数名称：SHUT_DOWN
+参数：
+- MODE：Input，UINT，定义关闭或重启系统的模式。例如，MODE=1表示关闭CPU 150xS和Windows；MODE=2表示重新启动CPU 150xS等。
+- COMMENT：Input，STRING，当MODE为1、3和4时，用于指定重新启动的原因，该原因将在Windows事件日志中输出。
+- Ret_Val (函数值)：Return，WORD，表示执行指令后的状态。例如，Ret_Val=0表示无故障；Ret_Val=8090表示不支持传递给MODE的值等。
+
+函数名称：RE_TRIGR
+参数：该指令不带任何参数。
+
+函数名称：STP
+参数：该指令不带任何参数。
+
+函数名称：GET_ERROR
+参数：
+- <操作数>：ErrorStruct，D、L，用于保存已发生错误的详细信息。ErrorStruct是一种系统数据类型，用于指定存储错误相关信息的结构。
+错误处理：
+- SHUT_DOWN：通过Ret_Val返回错误信息。
+- GET_ERROR：通过<操作数>返回错误信息，ErrorStruct类型。
+
+函数名称：GET_ERROR
+参数：
+- <操作数>：ErrorStruct，D、L，有关已发生错误的信息
+功能描述：GET_ERROR函数用于获取块内发生的错误信息，通常为访问错误。该错误信息以ErrorStruct数据类型返回。
+
+函数名称：GET_ERR_ID
+参数：
+- 函数值：WORD，D、L，错误ID
+功能描述：GET_ERR_ID指令用于查询块内发生的错误ID。如果在上一次执行该指令后块执行过程中系统报告块执行错误，则该指令将输出所发生第一个错误的错误ID。
+备注：ErrorStruct数据类型包含多个结构组件，如ERROR_ID、FLAGS、REACTION等，用于表示不同的错误信息和处理方式。错误ID只能保存在WORD数据类型的操作数中。如果块中存在多处错误，则在更正了第一个错误后仅输出该指令中下一个错误的错误ID。
+
+函数名称：INIT_RD
+参数：
+- <操作数>：Input，BOOL，I、Q、M、D、L，如果输入“REQ”的信号状态为“1”，将复位所有保持性数据。
+- 函数值 (RET_VAL)：INT，I、Q、M、D、L，错误信息
+功能描述：INIT_RD指令用于同时复位所有数据块、位存储器以及SIMATIC定时器和计数器中的保持性数据。
+错误处理：RET_VAL参数用于返回错误信息，例如，"0000"表示无错误，"80B5"表示由于该指令不在启动OB中进行编程，因此无法执行。
+
+函数名称：WAIT
+参数：
+- WT：Input，INT，延时时间的单位为微秒(μs)，可配置的延时范围为-32768到32767微秒(μs)。
+功能描述：WAIT函数用于将程序的执行过程暂停一段特定的时间，时间单位为微秒(μs)。如果指定了负延时时间，则ENO或RLO和BR位的输出信号状态为FALSE，负延时时间不会对CPU产生影响。
+
+函数名称：RUNTIME
+参数：
+- <操作数>：InOut，LREAL，用于存储测量的运行时间结果。
+功能描述：RUNTIME函数用于测量整个程序、单个块或命令序列的运行时间，单位为秒。该函数通过读取CPU内部的高频计数器来计算时间。
+
+函数名称：DECO
+参数：
+- IN：Input，UINT，指定输出值中待置位位的位置。
+功能描述：DECO函数用于在输出值中将输入值所指定的位置位。该函数读取参数IN的值，并设置输出值中对应的位，其它位以零填充。如果IN的值大于31，则执行以32为模的指令。
+
+函数名称：ENCO
+参数：
+- IN：Input，位字符串，指定输入值。
+功能描述：ENCO函数用于读取输入值中设置的最小值位的位号，并作为结果返回。
+
+函数名称：SEL
+参数：
+- G：Input，BOOL，控制选择IN0或IN1的开关。
+- IN0：Input，多种数据类型，当G为0时选择的输入值。
+- IN1：Input，多种数据类型，当G为1时选择的输入值。
+功能描述：SEL函数根据开关参数G的值选择IN0或IN1中的一个，并将所选参数的内容作为结果返回。如果G为0，则返回IN0的值；如果G为1，则返回IN1的值。所有参数必须是同一种数据类型等级。
+
+函数名称：MUX
+参数：
+- K：Input，整数，指定要传送内容的参数。
+- IN0：Input，二进制数、整数、浮点数、定时器、STRING、CHAR、WCHAR、TOD、DATE、DT，第一个输入值。
+- IN1：Input，二进制数、整数、浮点数、定时器、STRING、CHAR、WCHAR、TOD、DATE、DT，第二个输入值。
+- INELSE：Input，二进制数、整数、浮点数、定时器、STRING、CHAR、WCHAR、TOD、DATE、DT，指定K<>n时要复制的值。
+- 函数值：二进制数、整数、浮点数、定时器、STRING、CHAR、WCHAR、TOD、DATE、DT，指令的结果。
+功能描述：MUX函数用于复制所选的输入参数值并将其发出。参数K用于确定要移动其值的输入参数的编号。如果K参数的输入不是有效输入且未使用输入INELSE，则该功能无效。
+使用示例：
+SCL
+"Tag_Result" := MUX(K := "Tag_Number", IN0 := "Tag_1", IN1 := "Tag_2", INELSE := "Tag_3");
+备注：所有分配有参数的变量都必须为相同的数据类型。如果K参数具有一个负整数，那么变量的值将会更改。
+
+函数名称：DEMUX
+参数：
+- K：Input，整数，指定要将输入值(IN)复制到的输出。
+- IN：Input，二进制数、整数、浮点数、定时器、STRING、CHAR、WCHAR、TOD、DATE、DT，输入值。
+- OUT0：Output，二进制数、整数、浮点数、定时器、STRING、CHAR、WCHAR、TOD、DATE、DT，第一个输出。
+- OUT1：Output，二进制数、整数、浮点数、定时器、STRING、CHAR、WCHAR、TOD、DATE、DT，第二个输出。
+- OUTn：Output，二进制数、整数、浮点数、定时器、STRING、CHAR、WCHAR、TOD、DATE、DT，可选输出。
+- OUTELSE：Output，二进制数、整数、浮点数、定时器、STRING、CHAR、WCHAR、TOD、DATE、DT，当K大于n时，输入IN的值要复制到的输出。
+功能描述：DEMUX函数用于将输入参数IN的值传送到所选的输出参数。输入参数的选择与参数值K无关。K参数指定要将输入参数IN的值传送到的输出参数的编号。其它输出参数则保持不变。编号从OUT0开始，对于每个新输出，此编号连续递增。可以最多声明32个输出参数。
+
+函数名称：SHR
+参数：
+- IN：Input，待移位的操作数。
+- N：Input，整数，指定应将特定值移位的位数。
+功能描述：SHR函数用于将参数IN的内容逐位向右移动，并将结果作为函数值返回。如果参数N的值为“0”，则将参数IN的值作为结果。如果参数N的值大于可用位数，则参数IN的值将向右移动该位数个位置。无符号值移位时，用零填充操作数左侧区域中空出的位。如果指定值有符号，则用符号位的信号状态填充空出的位。
+
+函数名称：SHL
+参数：
+- IN：Input，位字符串、整数，要移位的值
+- N：Input，USINT、UINT、UDINT，对值(IN)进行移位的位数
+- 函数值：位字符串、整数，指令的结果
+功能描述：SHL函数用于将参数IN的内容逐位向左移动，并将结果作为函数值返回。
+
+函数名称：ROR
+参数：
+- IN：Input，位字符串、整数，指定要循环移位的值。
+- N：Input，USINT、UINT、UDINT，指定循环移位的位数。
+- 函数值：位字符串、整数，指令的结果。
+功能描述：ROR函数用于将参数IN的内容逐位向右循环移位，并用移出的位填充因循环移位而空出的位。如果N的值为0，则返回IN的值；如果N的值大于可用位数，则循环移动指定位数个位。
+
+函数名称：DRUM
+参数：
+- RESET：Input，BOOL，信号状态“1”表示复位状态。
+- JOG：Input，BOOL，当信号状态从“0”变为“1”时，该指令将进入下一步。
+- DRUM_EN：Input，BOOL，信号状态“1”允许顺控程序按照事件和时间条件提前执行。
+- LST_STEP：Input，BYTE，最大步数。
+- EVENT(i)，1 ≤ i ≤ 16：Input，BOOL，事件位(i)；初始信号状态为“1”。
+- OUT(j)，1 ≤ j ≤ 16：Output，BOOL，输出位(j)。
+- Q：Output，BOOL，信号状态“1”表示最后一步的时间已用完。
+- OUT_WORD：Output，WORD，顺控程序写入输出值的目标字地址。
+- ERR_CODE：Output，WORD，错误信息。
+- JOG_HIS：Static，BOOL，参数JOG的历史位。
+- EOD：Static，BOOL，信号状态“1”表示最后一步的时间已用完。
+- DSP：Static，BYTE，顺控程序的预设步。
+- DSC：Static，BYTE，顺控程序的当前步。
+- DCC：Static，DWORD，顺控程序的当前计数值。
+- DTBP：Static，WORD，顺控程序的预设时基。
+- PrevTime：Static，TIME，上一次的系统时间。
+- S_PRESET：Static，ARRAY[1..16] of WORD，每个步[1到16]的预置计数值。
+- OUT_VAL：Static，ARRAY[1..16, 0..15] of BOOL，每个步[1到16，0到15]的输出值。
+- S_MASK：Static，ARRAY[1..16, 0..15] of BOOL，每个步[1到16，0到15]的可组态掩码。初始信号状态为“1”。
+功能描述：DRUM函数用于执行顺控程序，根据事件和时间条件控制程序的步进。
+错误处理：ERR_CODE参数用于返回错误信息。例如，错误代码"0B"表示参数LST_STEP的值小于1或大于16；"0C"表示参数DSC的值小于1或大于参数LST_STEP的值；"0D"表示参数DSP的值小于1或大于参数LST_STEP的值。
+使用示例：
+SCL
+"DRUM_DB"(RESET := "Tag_Reset", JOG := "Tag_Input_Jog", DRUM_EN := "Tag_Input_DrumEN", LST_STEP := "Tag_Number_LastStep", EVENT1 := "MyTag_Event_1", ..., EVENT16 := "MyTag_Event_16", OUT1 => "MyTag_Output_1", ..., OUT16 => "MyTag_Output_16", Q => "Tag_Output_Q", OUT_WORD => "Tag_OutputWord", ERR_CODE => "Tag_ErrorCode");
+备注：参数OUT1到OUT16的输出位对应输出字(OUT_WORD)的位，其中OUT1对应最低有效位，OUT16对应最高有效位。
+
+函数名称：DCAT
+参数：
+- CMD：Input，BOOL，表示“关闭(close)”命令的信号状态为“0”，表示“打开(open)”命令的信号状态为“1”。
+- O_FB：Input，BOOL，打开时的反馈输入。
+- C_FB：Input，BOOL，关闭时的反馈输入。
+- Q：Output，BOOL，显示参数CMD的状态。
+- OA：Output，BOOL，打开时的报警输出。
+- CA：Output，BOOL，关闭时的报警输出。
+- ET：Static，DINT，当前已用时间，1次计数=1ms。
+- PT：Static，DINT，预设的定时器值，1个时钟脉冲=1ms。
+- PREV_TIME：Static，DWORD，上一次的系统时间。
+- CMD_HIS：Static，BOOL，CMD历史位。
+功能描述：DCAT函数用于从CMD发出打开或关闭命令的时刻开始计时，直到超出预设时间PT或收到设备已打开或关闭的信息。如果在规定时间内未收到设备状态信息，将激活相应的报警。
+使用示例：
+SCL
+"DCAT_DB"(CMD := "Tag_Input_CMD",
+          O_FB := "Tag_Input_O_FB",
+          C_FB := "Tag_Input_C_FB",
+          Q => "Tag_Output_Q",
+          OA => "Tag_Output_OA",
+          CA => "Tag_Output_CA");
+
+函数名称MCAT：电机控制定时器报警
+参数：
+- C_FB：Input，BOOL，关闭时的反馈输入。
+- OO：Output，BOOL，“打开”输出。
+- CO：Output，BOOL，“关闭”输出。
+- OA：Output，BOOL，打开时的报警输出。
+- CA：Output，BOOL，关闭时的报警输出。
+- Q：Output，BOOL，信号状态，“0”表示错误状态。
+- ET：Static，DINT，当前已用时间，其中1次计数=1ms。
+- PT：Static，DINT，预设的定时器值，其中1个时钟脉冲=1ms。
+- PREV_TIME：Static，DWORD，上一次的系统时间。
+- O_HIS：Static，BOOL，“打开”历史位。
+- C_HIS：Static，BOOL，“关闭”历史位。
+功能描述：电机控制定时器报警函数用于根据输入条件和预设的定时器值，控制电机的打开、关闭以及报警输出。该函数能够记录历史状态，并在达到预设时间时产生报警。
+错误处理：无直接错误处理参数，但输出参数Q表示错误状态。
+使用示例：
+SCL
+"MCAT_DB"(O_CMD := "Tag_Iput_O_CMD",
+          C_CMD := "Tag_Input_C_CMD",
+          S_CMD := "Tag_Input_S_CMD",
+          O_FB := "Tag_Input_O_FB",
+          C_FB := "Tag_Input_C_FB",
+          OO => "Tag_OutputOpen",
+          CO => "Tag_OutputClosed",
+          OA => "Tag_Output_OA",
+          CA => "Tag_Output_CA",
+          Q => "Tag_Output_Q");
+
+函数名称IMC：比较输入位与掩码位
+参数：
+- IN_BIT0：Input，BOOL，比较输入位0与掩码位0。
+- IN_BIT1：Input，BOOL，比较输入位1与掩码位1。
+- ...
+- IN_BIT15：Input，BOOL，比较输入位15与掩码位15。
+- CMP_STEP：Input，BYTE，用于比较的掩码步号。
+- OUT：Output，BOOL，信号状态“1”表示找到一个匹配值，“0”表示未找到匹配值。
+- ERR_CODE：Output，WORD，错误信息。
+- CMP_VAL：Static，ARRAY OF WORD，比较掩码[0到15，0到15]：下标的第一个编号为步号，第二个编号为掩码的位号。
+功能描述：比较输入位与掩码位函数用于将最多16个设定的输入位的信号状态与相应的掩码位进行比较，如果找到匹配值，则OUT参数的信号状态置为“1”。
+错误处理：ERR_CODE参数用于返回错误信息。
+
+函数名称：LEAD_LAG
+参数：
+- IN：Input，REAL，待处理的当前采样时间（周期）输入值。
+- SAMPLE_T：Input，INT，采样时间。
+- OUT：Output，REAL，指令的结果。
+- ERR_CODE：Output，WORD，错误信息。
+- LD_TIME：Static，REAL，提前时间的单位与采样时间的相同。
+- LG_TIME：Static，REAL，滞后时间的时间单位与采样时间的相同。
+- GAIN：Static，REAL，%/%的增益（稳态下输出变化与输入变化的比率）。
+- PREV_IN：Static，REAL，上一次输入。
+- PREV_OUT：Static，REAL，上一次输出。
+功能描述：LEAD_LAG函数用于根据输入值、采样时间、提前时间、滞后时间和增益计算输出值，通常用于处理需要滞后或提前反馈控制的情况。
+错误处理：ERR_CODE参数用于返回错误信息。例如，错误代码"0009"表示"参数GAIN的值小于或等于0"。
+使用示例：
+SCL
+"LEAD_LAG_DB"(IN := "Tag_Input", SAMPLE_T := "Tag_Input_SAMPLE_T", OUT => "Tag_Output_Result", ERR_CODE => "Tag_ErrorCode");
+
+函数名称：SEG
+参数：
+- IN：Input，WORD，以四个十六进制数字表示的源字。
+- OUT：Output，DWORD，7段显示的位模式。
+功能描述：SEG函数用于将指定的源字（四个十六进制数字）转换为7段显示的等价位模式。
+使用示例：
+SCL
+SEG(IN := "Tag_Input", OUT => "Tag_Output");
+
+函数名称：BCDCPL
+参数：
+- <操作数>：Input，位字符串，7位BCD数。
+- 函数值：DWORD，指令的结果。
+功能描述：BCDCPL指令用于计算操作数中所指定的7位BCD数的十进制补码。
+
+函数名称：BITSUM
+参数：
+- <操作数>：Input，DWORD，要统计其置位位数量的操作数。
+- 函数值：INT，指令的结果。
+功能描述：BITSUM指令用于统计操作数中信号状态被置位为“1”的位数。
+
+函数名称：T_COMP
+参数：
+- IN1：Input，数据类型为“定时器”或“日期和时间”的变量。
+- IN2：Input，数据类型为“定时器”或“日期和时间”的变量。
+函数返回用于输出比较结果的返回值。
+功能描述：T_COMP指令用于比较两个数据类型为“定时器”或“日期和时间”的变量的内容。比较结果在OUT参数中输出，满足比较条件时OUT将置位为“1”。支持的数据类型包括DATE, TIME, LTIME, TOD, LTOD, DT, LDT, DTL, S5Time。
+
+函数名称：T_CONV
+参数：
+- IN：Input，数据类型为整数、TIME、日期和时间，存储区为I、Q、M、D、L、P或常量，要转换的值。
+函数返回数据类型为整数、TIME、日期和时间，存储区为I、Q、M、D、L、P，转换结果。
+功能描述：将一个时间或日期时间值转换为另一种数据类型。
+
+函数名称：T_ADD
+参数：
+- IN1：Input，数据类型为TIME或LTIME，存储区为I、Q、M、D、L、P或常量，要相加的第一个数。
+- IN2：Input，数据类型为TIME或LTIME，存储区为I、Q、M、D、L、P或常量，要相加的第二个数。
+函数返回数据类型为DINT, DWORD, TIME, TOD, LTIME，存储区为I、Q、M、D、L、P，相加的结果。
+功能描述：将两个时间值相加，返回结果。
+
+函数名称：T_SUB
+参数：
+- IN1：Input，TIME、LTIME、DTL、TOD类型，被减数。
+- IN2：Input，TIME或LTIME类型，减数。
+- OUT：Return，DTL、DINT、DWORD、TIME、TOD、UDINT类型，相减的结果。
+功能描述：T_SUB函数用于将IN1输入参数中的时间值减去IN2输入参数中的时间值。可以将时间段减去另一个时间段，或从某个时间中减去时间段。
+
+函数名称：RD_SYS_T
+参数：
+函数的返回值：Return，INT，指令的状态
+- OUT：Output，DT或DTL或LDT，CPU的日期和时间
+功能描述：RD_SYS_T函数用于读取CPU时钟的当前日期和时间（模块时间），并在OUT输出参数中输出读取的日期和时间。得出的值不包含有关本地时区或夏令时的信息。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"8081"表示由于数据读取超出OUT参数已选数据类型所允许的范围，因此无法保存。
+
+函数名称：RD_LOC_T
+参数：
+函数的返回值：Return，INT，指令的状态
+- OUT：Output，DT或LDT或DTL，本地时间
+功能描述：RD_LOC_T函数用于从CPU时钟读取当前本地时间，并将此时间在OUT输出中输出。在输出本地时间时，会用到夏令时和标准时间的时区和开始时间（已在CPU时钟的组态中设置）的相关信息。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"8080"表示无法读取本地时间，"8081"表示当前的本地时间超出OUT参数已选数据类型所允许的范围，因此无法保存。
+
+函数名称：WR_LOC_T
+参数：
+- LOCTIME：Input，DTL或LDT，本地时间，用于设置CPU时钟的日期和时间。
+- DST：Input，BOOL，夏令时标志。仅在从夏令时切换到标准时间时的双重小时值期间进行评估。
+函数的返回值：Return，INT，错误信息。
+功能描述：WR_LOC_T函数用于设置CPU时钟的日期和时间。输入值必须介于指定的时间范围内，根据输入的DST参数在不同时间切换期间进行相应的处理。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"8080"表示"参数LOCTIME的值无效"；"8081"表示"LOCTIME参数中指定的时间值超出有效值范围"；"8089"表示"时间值不存在（切换到夏令时时小时已过）"等。
+使用示例：
+```
+WR_LOC_T(LOCTIME := inputLocTIME, DST := dstValue, RET_VAL := returnValue);
+```
+
+函数名称：SET_TIMEZONE
+参数：
+- REQ：Input，BOOL，用于执行函数。在S7-1200上，当REQ为上升沿时执行；在S7-1500和SET_TIMEZONE版本< V2.0上，当REQ=1时执行；在S7-1500和SET_TIMEZONE版本>= V2.0上，当REQ为上升沿时执行。
+- TimeZone：Input，TimeTransformationRule数据类型，用于连接系统数据类型TimeTransformationRule，存储本地时区和夏令时/标准时间转换参数。
+- DONE：Output，BOOL，状态参数，用于指示作业是否已经成功完成。
+- BUSY：Output，BOOL，状态参数，用于指示作业是否尚未完成，无法启动新作业。
+- ERROR：Output，BOOL，状态参数，用于指示是否出错。
+- STATUS：Output，WORD，用于输出详细的错误和状态信息。
+功能描述：SET_TIMEZONE函数用于设置本地时区和夏令时/标准时间切换的参数。这个指令会将内部数据写入CPU的装载存储器中，即使在发生电源故障时也会应用时区更改。每次更改时区时都需要调用一次该指令。
+
+函数名称：TimeTransformationRule
+参数：
+- Bias：INT，本地时间与UTC之间的时差（单位为分钟），范围在-720到+780分钟之间。
+- DaylightBias：INT，标准时间与夏令时之间的时差（单位为分钟），范围在0到120分钟之间。0表示禁用夏令时转换。
+- DaylightStartMonth：USINT，向夏令时切换的月份，1到12代表一月到十二月。
+- DaylightStartWeek：USINT，向夏令时切换的星期，1到5代表该月的第一周到最后一周。
+- DaylightStartWeekday：USINT，向夏令时切换的工作日，1到7代表星期日到星期六。
+- DaylightStartHour：USINT，向夏令时切换的小时。
+- DaylightStartMinute：USINT，向夏令时切换的分钟。
+- StandardStartMonth：USINT，向标准时间切换的月份，1到12代表一月到十二月。
+- StandardStartWeek：USINT，向标准时间切换的星期，1到5代表该月的第一周到最后一周。
+- StandardStartWeekday：USINT，向标准时间切换的工作日，1到7代表星期日到星期六。
+- StandardStartHour：USINT，向标准时间切换的小时。
+- StandardStartMinute：USINT，向标准时间切换的分钟。
+- TimeZoneName：STRING[80]，未使用，系统将忽略。
+- STATUS：错误代码，用于输出错误信息。
+错误处理：
+- 7000：未激活任何作业处理。
+- 7001：启动作业处理。
+- 7002：中间调用，已激活指令。
+- 808F：TimeZone参数无效或不一致。
+- 8092：CPU类型或固件版本不支持“SET_TIMEZONE”指令。
+- 80C3：临时资源错误。
+
+函数名称：SET_TIMEZONE
+参数：
+- REQ：Input，用于触发“SET_TIMEZONE”指令的执行。
+- BUSY：Output，指示处理是否忙碌。
+- DONE：Output，指示处理是否成功完成。
+- STATUS：Output，指示具体的处理方式。
+- ERROR：Output，指示处理是否发生错误。
+功能描述：SET_TIMEZONE函数用于设置CPU时钟的时区数据。当REQ为TRUE时，会覆盖CPU时钟的时区数据，并自动复位REQ为FALSE。
+
+函数名称：SNC_RTCB
+参数：
+函数的返回值：Output，包含指令执行过程中的错误代码。
+功能描述：SNC_RTCB函数用于同步CPU或总线段上的所有从站本地时钟。
+
+函数名称：TIME_TCK
+参数：
+函数的返回值：Return，TIME，包含读取的系统时间，范围：0到2^31 - 1 ms。
+功能描述：读取CPU的系统时间，系统时间是一个时间计数器，从0开始计数，最大值2147483647 ms，溢出后重新从0开始计数，时间刻度和精度为1 ms，仅受CPU操作模式影响。
+
+函数名称：RTM
+参数：
+- NR：Input，RTM，运行小时计数器的编号，从0开始。
+- MODE：Input，BYTE，作业ID：0-读取，1-启动，2-停止，4-设置为PV的值，5-设置为PV的值并启动，6-设置为PV的值并停止。
+- PV：Input，DINT，运行小时计数器的新值。
+函数的返回值：Return，INT，包含错误代码。
+- CQ：Output，BOOL，运行小时计数器的状态（1：正在运行）。
+- CV：Output，DINT，运行小时计数器的当前值。
+功能描述：对CPU的32位运行小时计数器执行设置、启动、停止和读取操作。
+
+函数名称：S_MOVE
+参数：
+- IN：Input，WSTRING，要移动的字符串。
+- OUT：Output，指定要写入的数据区域。
+功能描述：将IN参数中的字符串内容写入到OUT参数指定的数据区域。
+
+函数名称：S_COMP
+参数：
+- IN1：Input，STRING或WSTRING，D、L或常量，输入变量，格式为STRING/WSTRING。
+- IN2：Input，STRING或WSTRING，D、L或常量，输入变量，格式为STRING/WSTRING。
+- OUT：Output，BOOL，I、Q、M、D、L，比较的结果。
+
+函数名称：S_CONV
+参数：
+- IN：Input，STRING或WSTRING类型，D、L或常量，要转换的值。
+- OUT：Output，CHAR、WCHAR、USINT、UINT、UDINT、ULINT、SINT、INT、DINT、LINT、REAL、LREAL类型，I、Q、M、D、L或常量，转换结果。
+功能描述：S_CONV函数用于将IN输入中的值转换为OUT输出中指定的数据格式。转换类型包括字符串转数字、数字转字符串、字符转字符等。
+错误处理：无具体错误代码，转换失败时不会改变OUT参数的值。
+使用示例：
+S_CONV(IN := "123", OUT := resultREAL);
+
+函数名称：STRG_VAL
+参数：
+- IN：Input，STRING或WSTRING，要转换的数字字符串。
+- FORMAT：Input，WORD，指定解释字符串字符的方式。
+- P：Input，UINT，指定转换开始的字符位置。
+- OUT：Output，USINT, SINT, UINT, INT, UDINT, DINT, REAL, LREAL，转换结果。
+功能描述：STRG_VAL函数用于将字符串转换为整数或浮点数。转换允许的字符包括数字“0”到“9”、小数点、小数撇、指数“E”和“e”，以及加减号字符。如果发现无效字符，将取消转换过程。
+错误处理：通过ENO状态表示转换是否成功，0表示失败，1表示成功。例如，输入字符串'12345'，若FORMAT和P参数不正确，转换结果为0，ENO状态为0，表示转换失败。
+示例：
+IN (STRING) FORMAT (W#16#....) OUT （数据类型） OUT （值） ENO 状态
+'123' 0000 INT/DINT 123 1
+'-00456' 0000 INT/DINT -456 1
+'123.45' 0000 REAL 123.45 1
+'1.23E-4' 0002 REAL 1.23E-4 1
+
+函数名称：VAL_STRG
+参数：
+- IN：Input，与OUT参数相同的数据类型，需要转换的值。
+- SIZE：Input，USINT，写入字符串中字符的数量。
+- PREC：Input，USINT，小数点后的位数。
+- FORMAT：Input，USINT，控制数字格式。
+- P：Input，USINT，字符串中开始写入的位置。
+- OUT：Output，STRING，转换结果。
+功能描述：VAL_STRG函数用于将数值转换成字符串。在转换过程中，根据参数P的值确定写入位置，根据参数SIZE确定写入字符的数量，根据参数PREC确定小数点后的位数，根据参数FORMAT确定数字的格式。
+
+
+函数名称：Chars_TO_Strg
+参数：
+- CHARS：Input，VARIANT，复制操作的源，从Array of (W)CHAR / BYTE / WORD开始复制字符。
+- PCHARS：Input，DINT，Array of (W)CHAR / BYTE / WORD中的位置，从该位置处开始复制字符。
+- CNT：Input，UINT，要复制的字符数。使用值“0”将复制所有字符。
+- STRG：Output，STRING或WSTRING，复制操作的目标，(W)STRING数据类型的字符串。
+功能描述：Strg_TO_Chars函数用于将字符串中的字符复制到指定的Array结构中。Chars_TO_Strg函数用于将Array中的字符复制到字符串中。两个函数都支持ASCII字符的复制，并能够处理字符数组与字符串之间的数据转换。
+
+函数名称：MAX_LEN
+参数：
+- IN：Input，STRING或WSTRING类型，需要确定最大长度的字符串。
+- OUT：Return，INT或DINT类型，返回字符串的最大长度。
+
+函数名称：JOIN
+参数：
+- Mode：Input，DWORD，用于指定合并字符串的执行方式（CSV或FSR格式）以及是否在末尾添加额外分隔符。
+- RecSeparator：Input，VARIANT，用于指定源字符串的分隔符（CSV格式）或填充字符（FSR格式）。
+- EndSeparator：Input，VARIANT，用于指定在字符末尾处写入的分隔符，当Mode参数的第三位为1时有效。
+- SrcStruct：Input，VARIANT，指向源字符串的指针，可以是Array of STRING、Array of WSTRING或包含STRING或WSTRING的结构。
+- Count：Input，UDINT，连接的字符串数量，仅当SrcStruct参数使用Array of (W)STRING时有效。
+- DestArray：InOut，VARIANT，转换后写入字符的区域，使用Array [0 .. x] of CHAR/WCHAR数据类型。
+- Position：InOut，UDINT，为整个字符串中的位置制作索引。
+- Ret_Val：Return，INT，指令的状态。
+功能描述：JOIN函数主要用于将多个字符串合并为一个字符串。根据Mode参数选择CSV或FSR格式，并可指定分隔符和是否在末尾添加分隔符。SrcStruct参数指定源字符串，DestArray参数指定目标数组，Count参数指定要连接的字符串数量。
+错误处理：Ret_Val参数用于返回错误信息，例如，错误代码"8190"表示不支持Mode参数中选择，"8x20"表示源字符串无效，"80B5"表示指令缓冲区溢出等。
+使用示例：
+无具体示例代码提供。
+
+函数名称：SLI_FB_JOIN
+参数：
+- FORMAT：Input，指定字符串转换格式，例如CSV。
+- WRITEENDSEPARATOR：Input，指定是否在字符串结尾添加分隔符。
+- SOURCEARRAY：Input，ARRAY of STRING，待转换的源字符串数组。
+- ONESTRINGOFARRAY：Input，STRING，通常为SOURCEARRAY中的一个元素，用于计算转换后的字符串长度。
+- MODE：Output，通过函数SLI_FC_encodeMode_JOIN输出，包含转换模式信息。
+- #joinLength：Output，通过函数SLI_FC_calculateLength_JOIN输出，为转换后的整个字符串长度。
+- #finalPosition：Output，通过函数SLI_FC_calculateLength_JOIN输出，为JOIN指令停止执行的位置。
+- execute：Internal，用于控制JOIN指令执行与否的逻辑变量。
+- positionInDest：Internal，当前JOIN操作的目标位置。
+函数的返回值 (returnValue)：Output，JOIN指令的错误信息。
+功能描述：SLI_FB_JOIN函数块主要用于根据指定格式转换字符串数组，通过内部调用JOIN指令实现字符串的连接，同时确保不会发生缓冲区溢出。
+错误处理：RET_VAL参数用于返回JOIN指令的错误信息。
+使用示例：
+-- 伪代码，具体实现依赖于SCL语法规则 --
+"execute" := TRUE; -- 初始化execute变量为TRUE以开始执行JOIN指令 --
+WHILE "execute" DO
+    "MODE" := SLI_FC_encodeMode_JOIN(FORMAT, WRITEENDSEPARATOR);
+    "#joinLength" := SLI_FC_calculateLength_JOIN(SOURCEARRAY, ONESTRINGOFARRAY, MODE);
+    IF positionInDest < 760 AND positionInDest < #finalPosition THEN
+        "returnValue" := JOIN(...);
+        -- 更新positionInDest的值 --
+    ELSE
+        "execute" := FALSE; -- 当达到指定位置或字符串末尾时停止JOIN指令的执行 --
+    END_IF;
+END_WHILE;
+
+函数名称：SPLIT
+参数：
+- Mode：Input，DWord，指定分割为多个字符串的执行方式。
+- RecSeparator：Input，Variant，对于 CSV 格式为数组中使用的分隔符，对于 FSR 格式为填充字符。
+- EndSeparator：Input，Variant，在待读取的数组中用于定义完整字符串末尾的分隔符。
+- SrcArray：Input，Variant，指向待读取数组的指针 (Array of CHAR/WCHAR)。
+- DestStruct：InOut，Variant，包含已转换字符串的结构 (Array of STRING/WSTRING)。
+- Position：InOut，UDInt，SrcArray 参数处要读取数组的位置。
+- Ret_Val：Return，Int，指令执行结果 / 错误代码。
+- Count：Output，UDInt，找到的字符串数量。
+功能描述：
+- "JOIN" 指令用于将 Array of STRING 转换为 CSV 或 FSR 格式。
+- "SPLIT" 指令用于将数组 (Array of CHAR/WCHAR) 转换为多个单独的字符串 (Array of STRING/WSTRING 或结构)。
+
+函数名称：SLI_FC_encodeMode_SPLIT
+参数：
+- 无直接参数描述
+功能描述：用于合并“SPLIT”指令的MODE参数值，输出使用的模式。
+
+函数名称：SLI_FC_calculateLength_SPLIT
+参数：
+- 无直接参数描述
+功能描述：用于获取源区域中字符串的字符长度。
+
+函数名称：SLI_FC_encodeMode_SPLIT
+参数：
+- 无直接参数描述，但输出参数 MODE（“#statMode”）用于存储使用的模式。
+
+函数名称：SLI_FC_calculateLength_SPLIT
+参数：
+- SOURCEARRAY（“sourceArray”）：输入参数，用于提供源字符串。
+- MODE（“#statMode”）：输入参数，提供使用的模式。
+- #splitLength：输出参数，存储计算出的字符串长度。
+
+函数名称：SLI_FB_SPLIT
+参数：
+- RECSEPARATOR（“recSeparator”）：输入参数，用于指定记录分隔符。
+- ENDSEPARATOR（“endSeparator”）：输入参数，用于指定结束分隔符。
+- SRCARRAY（“sourceArrayCSV”）：输入参数，提供以CSV格式发送的Array of CHAR字符串。
+- DSTSTRUCT（“destArray”）：输出参数，转换后的字符串存储在Array of STRING中。
+- POSITION（“positionInSource”）：输入参数，指定读取Array of CHAR的起始位置。
+- COUNT（“countOutputStrings”）：输出参数，指示发现的字符串数量。
+函数的返回值（“returnValue”）：输出参数，指示执行过程中是否出错。
+
+函数名称：ATH
+参数：
+- IN：Input，VARIANT类型，指向ASCII字符串的指针，可引用STRING, WSTRING, CHAR, BYTE, Array of CHAR, Array of BYTE, WCHAR, Array of WCHAR, Array of WORD等数据类型。
+- N：Input，INT，待转换的ASCII字符数。
+- OUT：Output，VARIANT，十六进制数的存储地址，可引用Array of CHAR, Array of BYTE, Array of WORD, STRING, BYTE, CHAR, WORD, INT, DWORD, DINT, SINT, USINT, UINT, UDINT等数据类型。
+函数的返回值：Return，WORD，指令的状态。
+功能描述：ATH函数用于将ASCII字符串转换为十六进制数。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"0007"表示"无效字符"；"8182"表示"输入缓冲区过小"；"8120"表示"IN参数中的格式无效"等。
+
+函数名称：HTA
+参数：
+- IN：Input，VARIANT，十六进制数的起始地址，支持多种数据类型。
+- N：Input，UINT，待转换的十六进制字节数。
+函数返回值，VARIANT，结果的存储地址，支持多种数据类型。
+函数的返回值：WORD，错误消息。
+功能描述：将IN参数指定的十六进制数转换为ASCII字符串，转换结果存储在OUT参数指定的地址中。
+错误处理：RET_VAL参数用于返回错误信息。例如，错误代码"8182"表示"输入缓冲区过小，无法容纳N参数中的数据"；"8120"表示"IN参数中的格式无效"；"8151"表示"IN参数中的数据类型不受支持"等。
+
+函数名称：LEN
+参数：
+- IN：Input，STRING或WSTRING，字符串。
+函数返回值，INT，有效字符数。
+功能描述：查询IN输入参数中指定的字符串当前长度，并将其作为数值输出到OUT参数中。
+
+函数名称：CONCAT
+参数：
+- IN1：Input，STRING或WSTRING，第一个字符串。
+- IN2：Input，STRING或WSTRING，第二个字符串。
+函数返回值，STRING或WSTRING，合并后的字符串。
+功能描述：将IN1输入参数中的字符串与IN2输入参数中的字符串合并在一起，结果通过OUT输出参数输出。如果生成的字符串长度大于OUT参数中指定的变量长度，则将生成的字符串限制到可用长度。
+
+函数名称：RIGHT
+参数：
+- IN：Input，STRING或WSTRING，表示要提取字符的源字符串。
+- L：Input，BYTE、INT、SINT、USINT，表示要提取的字符数。
+函数返回值，STRING或WSTRING，表示提取的部分字符串。
+功能描述：从输入字符串的右侧提取指定数量的字符。
+
+函数名称：MID
+参数：
+- IN：Input，STRING或WSTRING，表示要提取字符的源字符串。
+- L：Input，BYTE、INT、SINT、USINT，表示要提取的字符串长度。
+- P：Input，BYTE、INT、SINT、USINT，表示要提取的第一个字符的位置（第一个字符=1）。
+函数返回值，STRING或WSTRING，表示提取的部分字符串。
+功能描述：从输入字符串的指定位置提取指定长度的字符。
+
+函数名称：DELETE
+参数：
+- IN：Input，STRING或WSTRING，待删除字符的源字符串。
+- L：Input，BYTE、INT、SINT、USINT，要删除的字符数。
+- P：Input，BYTE、INT、SINT、USINT，要删除的第一个字符的位置。
+函数返回值，STRING或WSTRING，生成的字符串。
+规则：
+- 如果P的值为负数或等于零，则OUT输出为空字符串。
+- 如果P的值大于IN字符串的长度，则OUT输出为输入字符串。
+- 如果L的值为零，则OUT输出为输入字符串。
+- 如果L的值大于IN字符串的长度，则从P指定的位置删除字符直到字符串末尾。
+- 如果L的值为负数，则OUT输出为空字符串。
+
+函数名称：INSERT
+参数：
+- IN1：Input，STRING或WSTRING，源字符串。
+- IN2：Input，STRING或WSTRING，要插入的字符串。
+- P：Input，BYTE、INT、SINT、USINT，插入位置。
+函数返回值，STRING或WSTRING，生成的字符串。
+规则：
+- 如果P的值超出IN1字符串的长度，则IN2附加到IN1后。
+- 如果P的值为零，则IN1附加到IN2前。
+- 如果P的值为负数，则OUT输出为空字符串。
+- 如果生成的字符串长度大于OUT变量长度，则生成的字符串被截断。
+
+函数名称：REPLACE
+参数：
+- IN1：Input，STRING或WSTRING，要替换字符的源字符串。
+- IN2：Input，STRING或WSTRING，含有替换字符的字符串。
+- L：Input，BYTE、INT、SINT、USINT，要替换的字符数。
+- P：Input，BYTE、INT、SINT、USINT，要替换的第一个字符的位置。
+函数返回值，STRING或WSTRING，生成的字符串。
+规则：
+- 如果P的值为负数或等于零，则OUT输出为空字符串。
+- 如果L的值为负数，则OUT输出为空字符串。
+- 如果P大于IN1字符串的长度，则IN2附加到IN1后。
+- 如果L的值为零，则插入字符而非替换。
+- 如果生成的字符串长度大于OUT变量长度，则生成的字符串被截断。
+
+函数名称：FIND
+参数：
+- IN1：Input，STRING或WSTRING，被搜索的字符串。
+- IN2：Input，STRING或WSTRING，要搜索的字符串。
+函数返回值，INT，字符位置。
+功能描述：FIND函数用于在IN1输入参数中的字符串内搜索特定的字符串。该函数使用IN2输入参数指定要搜索的值，搜索从左向右进行。OUT输出参数中输出第一次出现该值的位置。如果搜索返回没有匹配项，则OUT输出参数中将输出值“0”。
+
+函数名称：GetSymbolName
+参数：
+- VARIABLE：Input，PARAMETER，用于选择读取输入参数名称的本地接口。
+- SIZE：Input，DINT，用于限制OUT参数处输出字符数的限值。SIZE > 0时返回名称的前SIZE个字符；SIZE = 0时返回整个名称；SIZE < 0时返回名称的最后SIZE个字符。
+函数返回值，WSTRING，用于输出输入参数的变量名称。
+功能描述：GetSymbolName函数用于读取块接口的输入参数的变量名称，可以指定读取长度。
+错误处理：无具体错误代码，但需注意代码存储器空间需求大幅增加和运行时间延长的问题。

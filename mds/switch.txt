@@ -1,0 +1,1057 @@
+- BYTE 到 BOOL：不能进行隐式转换
+- BYTE 到 WORD：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 DWORD：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 LWORD：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 SINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 USINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 INT：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 UINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 DINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 UDINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 LINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 ULINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 REAL：不能进行隐式转换
+- BYTE 到 LREAL：不能进行隐式转换
+- BYTE 到 TIME：不能进行隐式转换
+- BYTE 到 LTIME：不能进行隐式转换
+- BYTE 到 S5TIME：不能进行隐式转换
+- BYTE 到 LDT：不能进行隐式转换
+- BYTE 到 DTL：不能进行隐式转换
+- BYTE 到 DT：不能进行隐式转换
+- BYTE 到 DATE：不能进行隐式转换
+- BYTE 到 TOD：不能进行隐式转换
+- BYTE 到 LTOD：不能进行隐式转换
+- BYTE 到 STRING：不能进行隐式转换
+- BYTE 到 WSTRING：不能进行隐式转换
+- BYTE 到 CHAR：源值的位模式以右对齐方式原样传递给目标数据类型
+- BYTE 到 WCHAR：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 BOOL：不能进行隐式转换
+- WORD 到 BYTE：将低字节传递给目标数据类型，忽略高字节
+- WORD 到 DWORD：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 LWORD：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 SINT：将低字节传递给目标数据类型，忽略高字节
+- WORD 到 USINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 INT：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 UINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 DINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 UDINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 LINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 ULINT：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 REAL：不能进行隐式转换
+- WORD 到 LREAL：不能进行隐式转换
+- WORD 到 TIME：不能进行隐式转换
+- WORD 到 LTIME：不能进行隐式转换
+- WORD 到 S5TIME：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 LDT：不能进行隐式转换
+- WORD 到 DTL：不能进行隐式转换
+- WORD 到 DT：不能进行隐式转换
+- WORD 到 DATE：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 TOD：不能进行隐式转换
+- WORD 到 LTOD：不能进行隐式转换
+- WORD 到 STRING：不能进行隐式转换
+- WORD 到 WSTRING：不能进行隐式转换
+- WORD 到 CHAR：源值的位模式以右对齐方式原样传递给目标数据类型
+- WORD 到 WCHAR：源值的位模式以右对齐方式原样传递给目标数据类型
+- DWORD -> BOOL: 不能进行隐式转换
+- DWORD -> BYTE: 将右边字节传递给目标数据类型，忽略左边字节。
+- DWORD -> WORD: 将右边字节传递给目标数据类型，忽略左边字节。
+- DWORD -> DWORD: 将右边字节传递给目标数据类型，忽略左边字节。
+- DWORD -> SINT: 将右边字节传递给目标数据类型，忽略左边字节。
+- DWORD -> USINT: 将右边字节传递给目标数据类型，忽略左边字节。
+- DWORD -> INT: 将右边字节传递给目标数据类型，忽略左边字节。
+- DWORD -> UINT: 将右边字节传递给目标数据类型，忽略左边字节。
+- DWORD -> DINT: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- DWORD -> UDINT: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- DWORD -> LINT: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- DWORD -> ULINT: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- DWORD -> REAL: 将值转换为目标数据类型格式。 （例如：数值“-1”转换为数值“-1.0”。）
+- DWORD -> LREAL: 不能进行隐式转换
+- DWORD -> TIME: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- DWORD -> LTIME: 不能进行隐式转换
+- DWORD -> S5TIME: 不能进行隐式转换
+- DWORD -> LDT: 不能进行隐式转换
+- DWORD -> DTL: 不能进行隐式转换
+- DWORD -> DT: 不能进行隐式转换
+- DWORD -> DATE: 不能进行隐式转换
+- DWORD -> TOD: 源值的位模式以右对齐方式原样传递给目标数据类型
+- DWORD -> LTOD: 不能进行隐式转换
+- DWORD -> STRING: 不能进行隐式转换
+- DWORD -> WSTRING: 不能进行隐式转换
+- DWORD -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- DWORD -> WCHAR: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- LWORD -> BOOL: 不能进行隐式转换
+- LWORD -> BYTE: 将右边字节传递给目标数据类型，忽略左边字节。
+- LWORD -> WORD: 将右边字节传递给目标数据类型，忽略左边字节。
+- LWORD -> DWORD: 将右边字节传递给目标数据类型，忽略左边字节。
+- LWORD -> SINT: 将右边字节传递给目标数据类型，忽略左边字节。
+- LWORD -> USINT: 将右边字节传递给目标数据类型，忽略左边字节。
+- LWORD -> INT: 将右边字节传递给目标数据类型，忽略左边字节。
+- LWORD -> UINT: 将右边字节传递给目标数据类型，忽略左边字节。
+- LWORD -> DINT: 将右边字节传递给目标数据类型，忽略左边字节。
+- LWORD -> UDINT: 将右边字节传递给目标数据类型，忽略左边字节。
+- LWORD -> LINT: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- LWORD -> ULINT: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- LWORD -> REAL: 不能进行隐式转换
+- LWORD -> LREAL: 将值转换为目标数据类型格式。 （例如：数值“-1”转换为数值“-1.0”。）
+- LWORD -> TIME: 不能进行隐式转换
+- LWORD -> LTIME: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- LWORD -> S5TIME: 不能进行隐式转换
+- LWORD -> LDT: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- LWORD -> DTL: 不能进行隐式转换
+- LWORD -> DT: 不能进行隐式转换
+- LWORD -> DATE: 不能进行隐式转换
+- LWORD -> TOD: 不能进行隐式转换
+- LWORD -> LTOD: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- LWORD -> STRING: 不能进行隐式转换
+- LWORD -> WSTRING: 不能进行隐式转换
+- LWORD -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- LWORD -> WCHAR: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- SINT -> BOOL: 不能进行隐式转换
+- SINT -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- SINT -> WORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- SINT -> DWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- SINT -> LWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- SINT -> USINT: 源值的位模式转换并传递给目标数据类型
+- SINT -> INT: 值转换为目标数据类型格式
+- SINT -> UINT: 值转换为目标数据类型格式
+- SINT -> DINT: 值转换为目标数据类型格式
+- SINT -> UDINT: 值转换为目标数据类型格式
+- SINT -> LINT: 值转换为目标数据类型格式
+- SINT -> ULINT: 值转换为目标数据类型格式
+- SINT -> REAL: 值转换为目标数据类型格式
+- SINT -> LREAL: 值转换为目标数据类型格式
+- SINT -> TIME: 不能进行隐式转换
+- SINT -> LTIME: 不能进行隐式转换
+- SINT -> S5TIME: 不能进行隐式转换
+- SINT -> LDT: 不能进行隐式转换
+- SINT -> DTL: 不能进行隐式转换
+- SINT -> DT: 不能进行隐式转换
+- SINT -> DATE: 不能进行隐式转换
+- SINT -> TOD: 不能进行隐式转换
+- SINT -> LTOD: 不能进行隐式转换
+- SINT -> STRING: 不能进行隐式转换
+- SINT -> WSTRING: 不能进行隐式转换
+- SINT -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+- SINT -> WCHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+- USINT -> BOOL: 不能进行隐式转换
+- USINT -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- USINT -> WORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- USINT -> DWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- USINT -> LWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- USINT -> SINT: 源值的位模式转换并传递给目标数据类型
+- USINT -> INT: 值转换为目标数据类型格式
+- USINT -> UINT: 值转换为目标数据类型格式
+- USINT -> DINT: 值转换为目标数据类型格式
+- USINT -> UDINT: 值转换为目标数据类型格式
+- USINT -> LINT: 值转换为目标数据类型格式
+- USINT -> ULINT: 值转换为目标数据类型格式
+- USINT -> REAL: 值转换为目标数据类型格式
+- USINT -> LREAL: 值转换为目标数据类型格式
+- USINT -> TIME: 不能进行隐式转换
+- USINT -> LTIME: 不能进行隐式转换
+- USINT -> S5TIME: 不能进行隐式转换
+- USINT -> LDT: 不能进行隐式转换
+- USINT -> DTL: 不能进行隐式转换
+- USINT -> DT: 不能进行隐式转换
+- USINT -> DATE: 不能进行隐式转换
+- USINT -> TOD: 不能进行隐式转换
+- USINT -> LTOD: 不能进行隐式转换
+- USINT -> STRING: 不能进行隐式转换
+- USINT -> WSTRING: 不能进行隐式转换
+- USINT -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+- USINT -> WCHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+- INT -> BOOL: 不能进行隐式转换
+- INT -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- INT -> WORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- INT -> DWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- INT -> LWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+- INT -> SINT: 源值的位模式转换并传递给目标数据类型
+- INT -> USINT: 值转换为目标数据类型格式
+- INT -> UINT: 值转换为目标数据类型格式
+- INT -> DINT: 值转换为目标数据类型格式
+- INT -> UDINT: 值转换为目标数据类型格式
+- INT -> LINT: 值转换为目标数据类型格式
+- INT -> ULINT: 值转换为目标数据类型格式
+- INT -> REAL: 值转换为目标数据类型格式
+- INT -> LREAL: 值转换为目标数据类型格式
+- INT -> TIME: 不能进行隐式转换
+- INT -> LTIME: 不能进行隐式转换
+- INT -> S5TIME: 不能进行隐式转换
+- INT -> LDT: 不能进行隐式转换
+- INT -> DTL: 不能进行隐式转换
+- INT -> DT: 不能进行隐式转换
+- INT -> DATE: 源值的位模式以右对齐方式原样传递给目标数据类型。
+- INT -> TOD: 不能进行隐式转换
+- INT -> LTOD: 不能进行隐式转换
+- INT -> STRING: 不能进行隐式转换
+- INT -> WSTRING: 不能进行隐式转换
+- INT -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+- INT -> WCHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+LINT -> BOOL: 不能进行隐式转换
+LINT -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+LINT -> WORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+LINT -> DWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+LINT -> LWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+LINT -> SINT: 源值的位模式转换并传递给目标数据类型
+LINT -> USINT: 源值的位模式转换并传递给目标数据类型
+LINT -> INT: 源值的位模式转换并传递给目标数据类型
+LINT -> UINT: 源值的位模式转换并传递给目标数据类型
+LINT -> DINT: 源值的位模式转换并传递给目标数据类型
+LINT -> UDINT: 源值的位模式转换并传递给目标数据类型
+LINT -> ULINT: 源值的位模式转换并传递给目标数据类型
+LINT -> REAL: 源值的位模式转换并传递给目标数据类型，在准确度上略有损失
+LINT -> LREAL: 源值的位模式转换并传递给目标数据类型，在准确度上略有损失
+LINT -> TIME: 不能进行隐式转换
+LINT -> LTIME: 源值的位模式以右对齐方式原样传递给目标数据类型
+LINT -> S5TIME: 不能进行隐式转换
+LINT -> LDT: 源值的位模式以右对齐方式原样传递给目标数据类型
+LINT -> DTL: 不能进行隐式转换
+LINT -> DT: 不能进行隐式转换
+LINT -> DATE: 不能进行隐式转换
+LINT -> TOD: 不能进行隐式转换
+LINT -> LTOD: 源值的位模式以右对齐方式原样传递给目标数据类型
+LINT -> STRING: 不能进行隐式转换
+LINT -> WSTRING: 不能进行隐式转换
+LINT -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+LINT -> WCHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+UDINT -> BOOL: 不能进行隐式转换
+UDINT -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+UDINT -> WORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+UDINT -> DWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+UDINT -> LWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位为0
+UDINT -> SINT: 源值的位模式转换并传递给目标数据类型
+UDINT -> USINT: 源值的位模式转换并传递给目标数据类型
+UDINT -> INT: 源值的位模式转换并传递给目标数据类型
+UDINT -> UINT: 源值的位模式转换并传递给目标数据类型
+UDINT -> DINT: 源值的位模式转换并传递给目标数据类型
+UDINT -> LINT: 源值的位模式转换并传递给目标数据类型
+UDINT -> ULINT: 源值的位模式转换并传递给目标数据类型
+UDINT -> REAL: 源值的位模式转换并传递给目标数据类型，在准确度上略有损失
+UDINT -> LREAL: 将值转换为目标数据类型格式
+UDINT -> TIME: 源值的位模式以右对齐方式原样传递给目标数据类型
+UDINT -> LTIME: 不能进行隐式转换
+UDINT -> S5TIME: 不能进行隐式转换
+UDINT -> LDT: 不能进行隐式转换
+UDINT -> DTL: 不能进行隐式转换
+UDINT -> DT: 不能进行隐式转换
+UDINT -> DATE: 不能进行隐式转换
+UDINT -> TOD: 源值的位模式以右对齐方式原样传递给目标数据类型
+UDINT -> LTOD: 不能进行隐式转换
+UDINT -> STRING: 不能进行隐式转换
+UDINT -> WSTRING: 不能进行隐式转换
+UDINT -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+UDINT -> WCHAR: 源值的位模式以右对齐方式原样传递给目标数据类型
+- REAL TO BOOL: 不能进行隐式转换
+- REAL TO BYTE: 不能进行隐式转换
+- REAL TO WORD: 不能进行隐式转换
+- REAL TO DWORD: 源值的位模式原样传递给目标数据类型。
+- REAL TO LWORD: 不能进行隐式转换
+- REAL TO SINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- REAL TO USINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- REAL TO INT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- REAL TO UINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- REAL TO DINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- REAL TO UDINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- REAL TO LINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- REAL TO ULINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- REAL TO LREAL: 数值传递给目标数据类型。
+- REAL TO TIME: 不能进行隐式转换
+- REAL TO LTIME: 不能进行隐式转换
+- REAL TO S5TIME: 不能进行隐式转换
+- REAL TO LDT: 不能进行隐式转换
+- REAL TO DTL: 不能进行隐式转换
+- REAL TO DT: 不能进行隐式转换
+- REAL TO DATE: 不能进行隐式转换
+- REAL TO TOD: 不能进行隐式转换
+- REAL TO LTOD: 不能进行隐式转换
+- REAL TO STRING: 不能进行隐式转换
+- REAL TO WSTRING: 不能进行隐式转换
+- REAL TO CHAR: 不能进行隐式转换
+- REAL TO WCHAR: 不能进行隐式转换
+- LREAL TO BOOL: 不能进行隐式转换
+- LREAL TO BYTE: 不能进行隐式转换
+- LREAL TO WORD: 不能进行隐式转换
+- LREAL TO DWORD: 不能进行隐式转换
+- LREAL TO LWORD: 源值的位模式原样传递给目标数据类型。
+- LREAL TO SINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- LREAL TO USINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- LREAL TO INT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- LREAL TO UINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- LREAL TO DINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- LREAL TO UDINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- LREAL TO LINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- LREAL TO ULINT: 源值的位模式四舍五入并转换和传递给目标数据类型。
+- LREAL TO REAL: 数值传递给目标数据类型。
+- LREAL TO TIME: 不能进行隐式转换
+- LREAL TO LTIME: 不能进行隐式转换
+- LREAL TO S5TIME: 不能进行隐式转换
+- LREAL TO LDT: 不能进行隐式转换
+- LREAL TO DTL: 不能进行隐式转换
+- LREAL TO DT: 不能进行隐式转换
+- LREAL TO DATE: 不能进行隐式转换
+- LREAL TO TOD: 不能进行隐式转换
+- LREAL TO LTOD: 不能进行隐式转换
+- LREAL TO STRING: 不能进行隐式转换
+- LREAL TO WSTRING: 不能进行隐式转换
+- LREAL TO CHAR: 不能进行隐式转换
+- LREAL TO WCHAR: 不能进行隐式转换
+TIME -> BOOL: 不能进行隐式转换
+TIME -> BYTE: 不能进行隐式转换
+TIME -> WORD: 不能进行隐式转换
+TIME -> DWORD: 源值的位模式原样传递给目标数据类型，转换结果为持续时间（毫秒）
+TIME -> LWORD: 不能进行隐式转换
+TIME -> SINT: 不能进行隐式转换
+TIME -> USINT: 不能进行隐式转换
+TIME -> INT: 不能进行隐式转换
+TIME -> UINT: 不能进行隐式转换
+TIME -> DINT: 源值的位模式原样传递给目标数据类型，转换结果为持续时间（毫秒）
+TIME -> UDINT: 源值的位模式原样传递给目标数据类型，转换结果为持续时间（毫秒）
+TIME -> LINT: 不能进行隐式转换
+TIME -> ULINT: 不能进行隐式转换
+TIME -> REAL: 不能进行隐式转换
+TIME -> LREAL: 不能进行隐式转换
+TIME -> S5TIME: 不能进行隐式转换
+TIME -> LTIME: 源值的位模式原样传递给目标数据类型，转换结果为持续时间（毫秒）
+TIME -> LDT: 不能进行隐式转换
+TIME -> DTL: 不能进行隐式转换
+TIME -> DT: 不能进行隐式转换
+TIME -> DATE: 不能进行隐式转换
+TIME -> TOD: 如果源值在 0 s 到 84599.999 s 之间，源值位模式原样传递给目标数据类型，转换结果为自半夜零点起的时间
+TIME -> LTOD: 不能进行隐式转换
+TIME -> STRING: 不能进行隐式转换
+TIME -> WSTRING: 不能进行隐式转换
+TIME -> CHAR: 不能进行隐式转换
+TIME -> WCHAR: 不能进行隐式转换
+LTIME -> BOOL: 不能进行隐式转换
+LTIME -> BYTE: 不能进行隐式转换
+LTIME -> WORD: 不能进行隐式转换
+LTIME -> DWORD: 不能进行隐式转换
+LTIME -> LWORD: 源值的位模式原样传递给目标数据类型，转换结果为持续时间（毫秒）
+LTIME -> SINT: 不能进行隐式转换
+LTIME -> USINT: 不能进行隐式转换
+LTIME -> INT: 不能进行隐式转换
+LTIME -> UINT: 不能进行隐式转换
+LTIME -> DINT: 不能进行隐式转换
+LTIME -> UDINT: 不能进行隐式转换
+LTIME -> LINT: 源值的位模式原样传递给目标数据类型，转换结果为持续时间（毫秒）
+LTIME -> ULINT: 源值的位模式原样传递给目标数据类型，转换结果为持续时间（毫秒）
+LTIME -> REAL: 不能进行隐式转换
+LTIME -> LREAL: 不能进行隐式转换
+LTIME -> S5TIME: 不能进行隐式转换
+LTIME -> TIME: 如果源值超出目标数据类型的值范围，则目标值保持不变
+LTIME -> LDT: 源值的位模式原样传递给目标数据类型，转换结果为从1970年1月1日开始的毫微秒时间数
+LTIME -> DTL: 不能进行隐式转换
+LTIME -> DT: 不能进行隐式转换
+LTIME -> DATE: 不能进行隐式转换
+LTIME -> TOD: 不能进行隐式转换
+LTIME -> LTOD: 源值的位模式原样传递给目标数据类型，转换结果为从1970年1月1日开始的毫微秒时间数
+LTIME -> STRING: 不能进行隐式转换
+LTIME -> WSTRING: 不能进行隐式转换
+LTIME -> CHAR: 不能进行隐式转换
+LTIME -> WCHAR: 不能进行隐式转换
+DT -> BOOL: 不能进行隐式转换
+DT -> BYTE: 不能进行隐式转换
+DT -> WORD: 不能进行隐式转换
+DT -> DWORD: 不能进行隐式转换
+DT -> LWORD: 不能进行隐式转换
+DT -> SINT: 不能进行隐式转换
+DT -> USINT: 不能进行隐式转换
+DT -> INT: 不能进行隐式转换
+DT -> UINT: 不能进行隐式转换
+DT -> DINT: 不能进行隐式转换
+DT -> UDINT: 不能进行隐式转换
+DT -> LINT: 不能进行隐式转换
+DT -> ULINT: 不能进行隐式转换
+DT -> REAL: 不能进行隐式转换
+DT -> LREAL: 不能进行隐式转换
+DT -> TIME: 不能进行隐式转换
+DT -> LTIME: 不能进行隐式转换
+DT -> S5TIME: 不能进行隐式转换
+DT -> LDT: 源值原样传递到目标数据类型
+DT -> DTL: 源值原样传递到目标数据类型
+DT -> DATE: 不能进行隐式转换
+DT -> TOD: 不能进行隐式转换
+DT -> LTOD: 不能进行隐式转换
+DT -> STRING: 不能进行隐式转换
+DT -> WSTRING: 不能进行隐式转换
+DT -> CHAR: 不能进行隐式转换
+DT -> WCHAR: 不能进行隐式转换
+DTL -> BOOL: 不能进行隐式转换
+DTL -> BYTE: 不能进行隐式转换
+DTL -> WORD: 不能进行隐式转换
+DTL -> DWORD: 不能进行隐式转换
+DTL -> LWORD: 不能进行隐式转换
+DTL -> SINT: 不能进行隐式转换
+DTL -> USINT: 不能进行隐式转换
+DTL -> INT: 不能进行隐式转换
+DTL -> UINT: 不能进行隐式转换
+DTL -> DINT: 不能进行隐式转换
+DTL -> UDINT: 不能进行隐式转换
+DTL -> LINT: 不能进行隐式转换
+DTL -> ULINT: 不能进行隐式转换
+DTL -> REAL: 不能进行隐式转换
+DTL -> LREAL: 不能进行隐式转换
+DTL -> TIME: 不能进行隐式转换
+DTL -> LTIME: 不能进行隐式转换
+DTL -> S5TIME: 不能进行隐式转换
+DTL -> LDT: 源值原样传递到目标数据类型
+DTL -> DT: 源值的位模式转换到目标数据类型时准确度略有损失
+DTL -> DATE: 不能进行隐式转换
+DTL -> TOD: 不能进行隐式转换
+DTL -> LTOD: 不能进行隐式转换
+DTL -> STRING: 不能进行隐式转换
+DTL -> WSTRING: 不能进行隐式转换
+DTL -> CHAR: 不能进行隐式转换
+DTL -> WCHAR: 不能进行隐式转换
+DATE -> BOOL: 不能进行隐式转换
+DATE -> BYTE: 不能进行隐式转换
+DATE -> WORD: 源值的位模式原样传递给目标数据类型，转换结果为从1990年1月1日开始到现在的天数
+DATE -> DWORD: 不能进行隐式转换
+DATE -> LWORD: 不能进行隐式转换
+DATE -> SINT: 不能进行隐式转换
+DATE -> USINT: 不能进行隐式转换
+DATE -> INT: 源值的位模式原样传递给目标数据类型，转换结果为从1990年1月1日开始到现在的天数
+DATE -> UINT: 源值的位模式原样传递给目标数据类型，转换结果为从1990年1月1日开始到现在的天数
+DATE -> DINT: 不能进行隐式转换
+DATE -> UDINT: 不能进行隐式转换
+DATE -> LINT: 不能进行隐式转换
+DATE -> ULINT: 不能进行隐式转换
+DATE -> REAL: 不能进行隐式转换
+DATE -> LREAL: 不能进行隐式转换
+DATE -> TIME: 不能进行隐式转换
+DATE -> LTIME: 不能进行隐式转换
+DATE -> S5TIME: 不能进行隐式转换
+DATE -> LDT: 不能进行隐式转换
+DATE -> DT: 不能进行隐式转换
+DATE -> DTL: 不能进行隐式转换
+DATE -> TOD: 不能进行隐式转换
+DATE -> LTOD: 不能进行隐式转换
+DATE -> STRING: 不能进行隐式转换
+DATE -> WSTRING: 不能进行隐式转换
+DATE -> CHAR: 不能进行隐式转换
+DATE -> WCHAR: 不能进行隐式转换
+TOD -> BOOL: 不能进行隐式转换
+TOD -> BYTE: 不能进行隐式转换
+TOD -> WORD: 不能进行隐式转换
+TOD -> DWORD: 源值的位模式原样传递给目标数据类型，转换结果为自当天凌晨 (0:00) 起计算的时间（毫秒）
+TOD -> LWORD: 不能进行隐式转换
+TOD -> SINT: 不能进行隐式转换
+TOD -> USINT: 不能进行隐式转换
+TOD -> INT: 不能进行隐式转换
+TOD -> UINT: 不能进行隐式转换
+TOD -> DINT: 源值的位模式原样传递给目标数据类型，转换结果为自当天凌晨 (0:00) 起计算的时间（毫秒）
+TOD -> UDINT: 源值的位模式原样传递给目标数据类型，转换结果为自当天凌晨 (0:00) 起计算的时间（毫秒）
+TOD -> LINT: 不能进行隐式转换
+TOD -> ULINT: 不能进行隐式转换
+TOD -> REAL: 不能进行隐式转换
+TOD -> LREAL: 不能进行隐式转换
+TOD -> TIME: 源值的位模式原样传递给目标数据类型，转换结果为自当天凌晨 (0:00) 起计算的时间（毫秒）
+TOD -> LTIME: 不能进行隐式转换
+TOD -> S5TIME: 不能进行隐式转换
+TOD -> LDT: 不能进行隐式转换
+TOD -> DT: 不能进行隐式转换
+TOD -> DTL: 不能进行隐式转换
+TOD -> DATE: 不能进行隐式转换
+TOD -> LTOD: 源值原样传递到目标数据类型
+TOD -> STRING: 不能进行隐式转换
+TOD -> WSTRING: 不能进行隐式转换
+TOD -> CHAR: 不能进行隐式转换
+TOD -> WCHAR: 不能进行隐式转换
+CHAR -> BOOL: 不能进行隐式转换
+CHAR -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位从左边开始填充 0
+CHAR -> WORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位从左边开始填充 0
+CHAR -> DWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位从左边开始填充 0
+CHAR -> LWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，其余位从左边开始填充 0
+CHAR -> SINT: 源值的位模式以右对齐方式原样传递给目标数据类型
+CHAR -> USINT: 源值的位模式以右对齐方式原样传递给目标数据类型
+CHAR -> INT: 源值的位模式以右对齐方式原样传递给目标数据类型
+CHAR -> UINT: 源值的位模式以右对齐方式原样传递给目标数据类型
+CHAR -> DINT: 源值的位模式以右对齐方式原样传递给目标数据类型
+CHAR -> UDINT: 源值的位模式以右对齐方式原样传递给目标数据类型
+CHAR -> LINT: 源值的位模式以右对齐方式原样传递给目标数据类型
+CHAR -> ULINT: 源值的位模式以右对齐方式原样传递给目标数据类型
+CHAR -> REAL: 不能进行隐式转换
+CHAR -> LREAL: 不能进行隐式转换
+CHAR -> TIME: 不能进行隐式转换
+CHAR -> LTIME: 不能进行隐式转换
+CHAR -> S5TIME: 不能进行隐式转换
+CHAR -> LDT: 不能进行隐式转换
+CHAR -> DTL: 不能进行隐式转换
+CHAR -> DT: 不能进行隐式转换
+CHAR -> DATE: 不能进行隐式转换
+CHAR -> TOD: 不能进行隐式转换
+CHAR -> LTOD: 不能进行隐式转换
+CHAR -> WCHAR: 不能进行隐式转换
+CHAR -> STRING: 该 STRING 长度变短为 1 并包含该字符
+CHAR -> WSTRING: 不能进行隐式转换
+STRING -> BOOL: 不能进行隐式转换
+STRING -> BYTE: 不能进行隐式转换
+STRING -> WORD: 不能进行隐式转换
+STRING -> DWORD: 不能进行隐式转换
+STRING -> LWORD: 不能进行隐式转换
+STRING -> SINT: 不能进行隐式转换
+STRING -> USINT: 不能进行隐式转换
+STRING -> INT: 不能进行隐式转换
+STRING -> UINT: 不能进行隐式转换
+STRING -> DINT: 不能进行隐式转换
+STRING -> UDINT: 不能进行隐式转换
+STRING -> LINT: 不能进行隐式转换
+STRING -> ULINT: 不能进行隐式转换
+STRING -> REAL: 不能进行隐式转换
+STRING -> LREAL: 不能进行隐式转换
+STRING -> TIME: 不能进行隐式转换
+STRING -> LTIME: 不能进行隐式转换
+STRING -> S5TIME: 不能进行隐式转换
+STRING -> LDT: 不能进行隐式转换
+STRING -> DTL: 不能进行隐式转换
+STRING -> DT: 不能进行隐式转换
+STRING -> DATE: 不能进行隐式转换
+STRING -> TOD: 不能进行隐式转换
+STRING -> LTOD: 不能进行隐式转换
+STRING -> CHAR: 如果该 STRING 包含一个或多个字符则返回首字符，否则返回的字符为代码 $00
+STRING -> WCHAR: 不能进行隐式转换
+STRING -> WSTRING: 不能进行隐式转换
+BOOL -> BYTE: 仅置位目标数据类型的 LSB（最低有效位），使能输出 ENO 始终为“1”，指令助记符为 BOOL_TO_BYTE
+BOOL -> WORD: 指令助记符为 BOOL_TO_WORD
+BOOL -> DWORD: 指令助记符为 BOOL_TO_DWORD
+BOOL -> LWORD: 指令助记符为 BOOL_TO_LWORD
+BOOL -> SINT: 指令助记符为 BOOL_TO_SINT
+BOOL -> USINT: 指令助记符为 BOOL_TO_USINT
+BOOL -> INT: 指令助记符为 BOOL_TO_INT
+BOOL -> UINT: 指令助记符为 BOOL_TO_UINT
+BOOL -> DINT: 指令助记符为 BOOL_TO_DINT
+BOOL -> UDINT: 指令助记符为 BOOL_TO_UDINT
+BOOL -> LINT: 指令助记符为 BOOL_TO_LINT
+BOOL -> ULINT: 指令助记符为 BOOL_TO_ULINT
+BOOL -> REAL: 不能进行显式转换
+BOOL -> LREAL: 不能进行显式转换
+BOOL -> TIME: 不能进行显式转换
+BOOL -> LTIME: 不能进行显式转换
+BOOL -> S5TIME: 不能进行显式转换
+BOOL -> LDT: 不能进行显式转换
+BOOL -> DT: 不能进行显式转换
+BOOL -> DTL: 不能进行显式转换
+BOOL -> TOD: 不能进行显式转换
+BOOL -> LTOD: 不能进行显式转换
+BOOL -> DATE: 不能进行显式转换
+BOOL -> STRING: 不能进行显式转换
+BOOL -> WSTRING: 不能进行显式转换
+BOOL -> CHAR: 不能进行显式转换
+BOOL -> WCHAR: 不能进行显式转换
+BYTE -> BOOL: 可能出现以下情况：如果源为“0”，则目标数据类型也为“0”且使能输出 ENO 为“1”。如果只有源值的最低有效位 LSB 为“1”，则目标数据类型也为“1”且使能输出 ENO 为“1”。如果源值中的其它位与 LSB 不相同，则目标数据类型将根据 LSB 进行设置且使能输出 ENO 为“0”。指令助记符为 BYTE_TO_BOOL
+BYTE -> WORD: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 BYTE_TO_WORD
+BYTE -> DWORD: 指令助记符为 BYTE_TO_DWORD
+BYTE -> LWORD: 指令助记符为 BYTE_TO_LWORD
+BYTE -> SINT: 指令助记符为 BYTE_TO_SINT
+BYTE -> USINT: 指令助记符为 BYTE_TO_USINT
+BYTE -> INT: 指令助记符为 BYTE_TO_INT
+BYTE -> UINT: 指令助记符为 BYTE_TO_UINT
+BYTE -> DINT: 指令助记符为 BYTE_TO_DINT
+BYTE -> UDINT: 指令助记符为 BYTE_TO_UDINT
+BYTE -> LINT: 指令助记符为 BYTE_TO_LINT
+BYTE -> ULINT: 指令助记符为 BYTE_TO_ULINT
+BYTE -> REAL: 不能进行显式转换
+BYTE -> LREAL: 不能进行显式转换
+BYTE -> TIME: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 BYTE_TO_TIME
+BYTE -> LTIME: 指令助记符为 BYTE_TO_LTIME
+BYTE -> S5TIME: 不能进行显式转换
+BYTE -> LDT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 BYTE_TO_LDT
+BYTE -> DT: 不能进行显式转换
+BYTE -> DTL: 不能进行显式转换
+BYTE -> TOD: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 BYTE_TO_TOD
+BYTE -> LTOD: 指令助记符为 BYTE_TO_LTOD
+BYTE -> DATE: 指令助记符为 BYTE_TO_DATE
+BYTE -> STRING: 不能进行显式转换
+BYTE -> WSTRING: 不能进行显式转换
+BYTE -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 BYTE_TO_CHAR
+BYTE -> WCHAR: 指令助记符为 BYTE_TO_WCHAR
+WORD -> BOOL: 可能出现以下情况：如果源为“0”，则目标数据类型也为“0”且使能输出 ENO 为“1”。如果只有源值的最低有效位 LSB 为“1”，则目标数据类型也为“1”且使能输出 ENO 为“1”。如果源值中的其它位与 LSB 不相同，则目标数据类型将根据 LSB 进行设置且使能输出 ENO 为“0”。指令助记符为 WORD_TO_BOOL
+WORD -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 WORD_TO_BYTE
+WORD -> DWORD: 指令助记符为 WORD_TO_DWORD
+WORD -> LWORD: 指令助记符为 WORD_TO_LWORD
+WORD -> SINT: ENO = TRUE 或 FALSE，具体取决于转换结果是否在 SINT 的范围内，指令助记符为 WORD_TO_SINT
+WORD -> USINT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 WORD_TO_USINT
+WORD -> INT: 指令助记符为 WORD_TO_INT
+WORD -> UINT: 指令助记符为 WORD_TO_UINT
+WORD -> DINT: 指令助记符为 WORD_TO_DINT
+WORD -> UDINT: 指令助记符为 WORD_TO_UDINT
+WORD -> LINT: 指令助记符为 WORD_TO_LINT
+WORD -> ULINT: 指令助记符为 WORD_TO_ULINT
+WORD -> REAL: 不能进行显式转换
+WORD -> LREAL: 不能进行显式转换
+WORD -> TIME: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 WORD_TO_TIME
+WORD -> LTIME: 指令助记符为 WORD_TO_LTIME
+WORD -> S5TIME: 指令助记符为 WORD_TO_S5TIME
+WORD -> LDT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 WORD_TO_LDT
+WORD -> DT: 不能进行显式转换
+WORD -> DTL: 不能进行显式转换
+WORD -> TOD: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 WORD_TO_TOD
+WORD -> LTOD: 指令助记符为 WORD_TO_LTOD
+WORD -> DATE: 指令助记符为 WORD_TO_DATE
+WORD -> STRING: 不能进行显式转换
+WORD -> WSTRING: 不能进行显式转换
+WORD -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 WORD_TO_CHAR
+WORD -> WCHAR: 指令助记符为 WORD_TO_WCHAR
+WORD -> INT (BCD16): 待转换值的数据类型为 WORD，而且是一个介于 -999 到 +999 之间的 BCD 编码值。转换结果为 INT 类型的整数（以二进制格式表示）。发生实数转换。如果位模式包括一个无效的四位二进制值，不会触发同步错误，仅会将状态位 OV 置位。指令助记符为 WORD_BCD16_TO_INT 或 BCD16_TO_INT
+DWORD -> BOOL: 可能出现以下情况：如果源为“0”，则目标数据类型也为“0”且使能输出 ENO 为“1”。如果只有源值的最低有效位 LSB 为“1”，则目标数据类型也为“1”且使能输出 ENO 为“1”。如果源值中的其它位与 LSB 不相同，则目标数据类型将根据 LSB 进行设置且使能输出 ENO 为“0”。指令助记符为 DWORD_TO_BOOL
+DWORD -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 DWORD_TO_BYTE
+DWORD -> WORD: 指令助记符为 DWORD_TO_WORD
+DWORD -> LWORD: 指令助记符为 DWORD_TO_LWORD
+DWORD -> SINT: ENO = TRUE 或 FALSE，具体取决于转换结果是否在 SINT 的范围内，指令助记符为 DWORD_TO_SINT
+DWORD -> USINT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 DWORD_TO_USINT
+DWORD -> INT: ENO = TRUE 或 FALSE，具体取决于转换结果是否在 INT 的范围内，指令助记符为 DWORD_TO_INT
+DWORD -> UINT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 DWORD_TO_UINT
+DWORD -> DINT: 指令助记符为 DWORD_TO_DINT
+DWORD -> UDINT: 指令助记符为 DWORD_TO_UDINT
+DWORD -> LINT: 指令助记符为 DWORD_TO_LINT
+DWORD -> ULINT: 指令助记符为 DWORD_TO_ULINT
+DWORD -> REAL: 指令助记符为 DWORD_TO_REAL
+DWORD -> LREAL: 不能进行显式转换
+DWORD -> TIME: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 DWORD_TO_TIME
+DWORD -> LTIME: 指令助记符为 DWORD_TO_LTIME
+DWORD -> S5TIME: 不能进行显式转换
+DWORD -> LDT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 DWORD_TO_LDT
+DWORD -> DT: 不能进行显式转换
+DWORD -> DTL: 不能进行显式转换
+DWORD -> TOD: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 DWORD_TO_TOD
+DWORD -> LTOD: 指令助记符为 DWORD_TO_LTOD
+DWORD -> DATE: 指令助记符为 DWORD_TO_DATE
+DWORD -> STRING: 不能进行显式转换
+DWORD -> WSTRING: 不能进行显式转换
+DWORD -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 DWORD_TO_CHAR
+DWORD -> WCHAR: 指令助记符为 DWORD_TO_WCHAR
+DWORD -> DINT (BCD32): 待转换值的数据类型为 DWORD，而且是一个介于 -9999999 到 +9999999 之间的 BCD 编码值。转换结果为 DINT 类型的整数（以二进制格式表示）。发生实数转换。如果位模式包括一个无效的四位二进制值，不会触发同步错误，仅会将状态位 OV 置位。指令助记符为 DWORD_BCD32_TO_DINT 或 BCD32_TO_DINT
+LWORD -> BOOL: 可能出现以下情况：如果源为“0”，则目标数据类型也为“0”且使能输出 ENO 为“1”。如果只有源值的最低有效位 LSB 为“1”，则目标数据类型也为“1”且使能输出 ENO 为“1”。如果源值其它位不等于最低有效位，则目标数据类型根据 LSB 进行设置且使能输出 ENO 为“0”。指令助记符为 LWORD_TO_BOOL
+LWORD -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LWORD_TO_BYTE
+LWORD -> WORD: 指令助记符为 LWORD_TO_WORD
+LWORD -> DWORD: 指令助记符为 LWORD_TO_DWORD
+LWORD -> SINT: ENO = TRUE 或 FALSE，具体取决于转换结果是否在 SINT 的范围内，指令助记符为 LWORD_TO_SINT
+LWORD -> USINT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LWORD_TO_USINT
+LWORD -> INT: ENO = TRUE 或 FALSE，具体取决于转换结果是否在 INT 的范围内，指令助记符为 LWORD_TO_INT
+LWORD -> UINT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LWORD_TO_UINT
+LWORD -> DINT: ENO = TRUE 或 FALSE，具体取决于转换结果是否在 DINT 的范围内，指令助记符为 LWORD_TO_DINT
+LWORD -> UDINT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LWORD_TO_UDINT
+LWORD -> LINT: 指令助记符为 LWORD_TO_LINT
+LWORD -> ULINT: 指令助记符为 LWORD_TO_ULINT
+LWORD -> REAL: 不能进行显式转换
+LWORD -> LREAL: 源值的位模式以右对齐方式原样传递给目标数据类型，如果在转换过程中出错，则 ENO 的信号状态将为 1；如果在处理过程中出错，则 ENO 的信号状态将为 0，指令助记符为 LWORD_TO_LREAL
+LWORD -> TIME: 指令助记符为 LWORD_TO_TIME
+LWORD -> LTIME: 指令助记符为 LWORD_TO_LTIME
+LWORD -> S5TIME: 不能进行显式转换
+LWORD -> LDT: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LWORD_TO_LDT
+LWORD -> DT: 不能进行显式转换
+LWORD -> DTL: 不能进行显式转换
+LWORD -> TOD: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LWORD_TO_TOD
+LWORD -> LTOD: 指令助记符为 LWORD_TO_LTOD
+LWORD -> DATE: 指令助记符为 LWORD_TO_DATE
+LWORD -> STRING: 不能进行显式转换
+LWORD -> WSTRING: 不能进行显式转换
+LWORD -> CHAR: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LWORD_TO_CHAR
+LWORD -> WCHAR: 指令助记符为 LWORD_TO_WCHAR
+SINT -> BOOL: 可能的场景，如下所示：如果源为“0”，则目标数据类型也为“0”，同时使能输出 ENO 为“1”。如果只有源值的最低有效位 LSB 为“1”，则目标数据类型也为“1”，同时使能输出 ENO 为“1”。如果源值中的其它位与 LSB 不相同，则目标数据类型的设置取决于 LSB，同时使能输出 ENO 为“0”。指令助记符为 SINT_TO_BOOL
+SINT -> BYTE: 源值的位模式以右对齐方式原样传递到目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 SINT_TO_BYTE
+SINT -> WORD: 指令助记符为 SINT_TO_WORD
+SINT -> DWORD: 指令助记符为 SINT_TO_DWORD
+SINT -> LWORD: 指令助记符为 SINT_TO_LWORD
+SINT -> USINT: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 SINT_TO_USINT
+SINT -> INT: 指令助记符为 SINT_TO_INT
+SINT -> UINT: 指令助记符为 SINT_TO_UINT
+SINT -> DINT: 指令助记符为 SINT_TO_DINT
+SINT -> UDINT: 指令助记符为 SINT_TO_UDINT
+SINT -> LINT: 指令助记符为 SINT_TO_LINT
+SINT -> ULINT: 指令助记符为 SINT_TO_ULINT
+SINT -> REAL: 将值转换为目标数据类型格式。指令助记符为 SINT_TO_REAL，NORM_X
+SINT -> LREAL: 指令助记符为 SINT_TO_LREAL，NORM_X
+SINT -> TIME: 数值传递给目标数据类型，单位为毫秒。指令助记符为 SINT_TO_TIME
+SINT -> LTIME: 数值传递给目标数据类型，单位为纳秒。指令助记符为 SINT_TO_LTIME
+SINT -> S5TIME: 不能进行显式转换
+SINT -> LDT: 由于格式为 1970-1-1-0:0:0.0，因此返回结果为纳秒。指令助记符为 SINT_TO_LDT
+SINT -> DT: 不能进行显式转换
+SINT -> DTL: 不能进行显式转换
+SINT -> TOD: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 SINT_TO_TOD
+SINT -> LTOD: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为无符号的目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 SINT_TO_LTOD
+SINT -> DATE: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 SINT_TO_DATE
+SINT -> STRING: 将值转换为一个字符串。输出正数值时不带符号。如果超出字符串所允许的长度，则使能输出 ENO 设置为“0”。指令助记符为 SINT_TO_STRING，S_CONV，VAL_STRG
+SINT -> WSTRING: 指令助记符为 SINT_TO_WSTRING
+SINT -> CHAR: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 SINT_TO_CHAR
+SINT -> WCHAR: 指令助记符为 SINT_TO_WCHAR
+INT -> BOOL: 可能的场景，如下所示：如果源为“0”，则目标数据类型也为“0”，同时使能输出 ENO 为“1”。如果只有源值的最低有效位 LSB 为“1”，则目标数据类型也为“1”，同时使能输出 ENO 为“1”。如果源值中的其它位与 LSB 不相同，则目标数据类型的设置取决于 LSB，同时使能输出 ENO 为“0”。指令助记符为 INT_TO_BOOL
+INT -> BYTE: 源值的位模式以右对齐方式原样传递到目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 INT_TO_BYTE
+INT -> WORD: 指令助记符为 INT_TO_WORD
+INT -> DWORD: 指令助记符为 INT_TO_DWORD
+INT -> LWORD: 指令助记符为 INT_TO_LWORD
+INT -> SINT: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 INT_TO_SINT
+INT -> USINT: 指令助记符为 INT_TO_USINT
+INT -> UINT: 指令助记符为 INT_TO_UINT
+INT -> DINT: 指令助记符为 INT_TO_DINT
+INT -> UDINT: 指令助记符为 INT_TO_UDINT
+INT -> LINT: 指令助记符为 INT_TO_LINT
+INT -> ULINT: 指令助记符为 INT_TO_ULINT
+INT -> REAL: 将值转换为目标数据类型格式。指令助记符为 INT_TO_REAL，NORM_X
+INT -> LREAL: 指令助记符为 INT_TO_LREAL，NORM_X
+INT -> TIME: 数值传递给目标数据类型，单位为毫秒。指令助记符为 INT_TO_TIME
+INT -> LTIME: 数值传递给目标数据类型，单位为纳秒。指令助记符为 INT_TO_LTIME
+INT -> S5TIME: 不能进行显式转换
+INT -> LDT: 由于格式为 1970-1-1-0:0:0.0，因此返回结果为纳秒。指令助记符为 INT_TO_LDT
+INT -> DT: 不能进行显式转换
+INT -> DTL: 不能进行显式转换
+INT -> TOD: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 INT_TO_TOD
+INT -> LTOD: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 INT_TO_LTOD
+INT -> DATE: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 INT_TO_DATE
+INT -> STRING: 将值转换为一个字符串。输出正数值时不带符号。如果超出字符串所允许的长度，则使能输出 ENO 设置为“0”。指令助记符为 INT_TO_STRING，S_CONV，VAL_STRG
+INT -> WSTRING: 指令助记符为 INT_TO_WSTRING
+INT -> CHAR: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 INT_TO_CHAR
+INT -> WCHAR: 指令助记符为 INT_TO_WCHAR
+INT -> BCD16: 待转换的值为 -999 到 +999 之间的整数值，数据类型为 INT。转换结果为 WORD 类型的 BCD 码。进行实数转换。如果值不在目标区域内，不会触发同步错误，而只会置位状态位 OV。指令助记符为 INT_TO_BCD16 或 INT_TO_BCD16_WORD
+USINT -> BOOL: 可能的场景，如下所示：如果源为“0”，则目标数据类型也为“0”，同时使能输出 ENO 为“1”。如果只有源值的最低有效位 LSB 为“1”，则目标数据类型也为“1”，同时使能输出 ENO 为“1”。如果源值中的其它位与 LSB 不相同，则目标数据类型的设置取决于 LSB，同时使能输出 ENO 为“0”。指令助记符为 USINT_TO_BOOL
+USINT -> BYTE: 源值的位模式以右对齐方式原样传递到目标数据类型，指令助记符为 USINT_TO_BYTE
+USINT -> WORD: 指令助记符为 USINT_TO_WORD
+USINT -> DWORD: 指令助记符为 USINT_TO_DWORD
+USINT -> LWORD: 指令助记符为 USINT_TO_LWORD
+USINT -> SINT: 源值的位模式以右对齐方式原样传递到目标数据类型。若转换期间改变了符号位，则使能输出 ENO 设置为“0”。指令助记符为 USINT_TO_SINT
+USINT -> INT: 转换源值的位模式，并传递给目标数据类型，指令助记符为 USINT_TO_INT
+USINT -> UINT: 指令助记符为 USINT_TO_UINT
+USINT -> DINT: 指令助记符为 USINT_TO_DINT
+USINT -> UDINT: 指令助记符为 USINT_TO_UDINT
+USINT -> LINT: 指令助记符为 USINT_TO_LINT
+USINT -> ULINT: 指令助记符为 USINT_TO_ULINT
+USINT -> REAL: 将值转换为目标数据类型格式，指令助记符为 USINT_TO_REAL，NORM_X
+USINT -> LREAL: 指令助记符为 USINT_TO_LREAL，NORM_X
+USINT -> TIME: 数值传递给目标数据类型，单位为毫秒，指令助记符为 USINT_TO_TIME
+USINT -> LTIME: 数值传递给目标数据类型，单位为纳秒，指令助记符为 USINT_TO_LTIME
+USINT -> S5TIME: 不能进行显式转换
+USINT -> LDT: 由于格式为 1970-1-1-0:0:0.0，因此返回结果为纳秒，指令助记符为 USINT_TO_LDT
+USINT -> DT: 不能进行显式转换
+USINT -> DTL: 不能进行显式转换
+USINT -> TOD: 转换源值的位模式，并传递给目标数据类型（由于格式为 0:0，因此单位为毫秒），指令助记符为 USINT_TO_TOD
+USINT -> LTOD: 转换源值的位模式，并传递给目标数据类型（由于格式为 0:0，因此单位为纳秒），指令助记符为 USINT_TO_LTOD
+USINT -> DATE: 转换源值的位模式，并传递给目标数据类型（由于格式为 1990-1-1，因此单位为天），指令助记符为 USINT_TO_DATE
+USINT -> STRING: 将值转换为一个字符串。输出正数值时不带符号。如果超出字符串所允许的长度，则使能输出 ENO 设置为“0”。指令助记符为 USINT_TO_STRING，S_CONV，VAL_STRG
+USINT -> WSTRING: 指令助记符为 USINT_TO_WSTRING
+USINT -> CHAR: 转换源值的位模式，并传递给目标数据类型，指令助记符为 USINT_TO_CHAR
+USINT -> WCHAR: 指令助记符为 USINT_TO_WCHAR
+UINT -> BOOL: 可能的场景，如下所示：如果源为“0”，则目标数据类型也为“0”，同时使能输出 ENO 为“1”。如果只有源值的最低有效位 LSB 为“1”，则目标数据类型也为“1”，同时使能输出 ENO 为“1”。如果源值中的其它位与 LSB 不相同，则目标数据类型的设置取决于 LSB，同时使能输出 ENO 为“0”。指令助记符为 UINT_TO_BOOL
+UINT -> BYTE: 源值的位模式以右对齐方式原样传递到目标数据类型。如果在这个过程中出现位丢失，则使能输出 ENO 设置为 0。指令助记符为 UINT_TO_BYTE
+UINT -> WORD: 指令助记符为 UINT_TO_WORD
+UINT -> DWORD: 指令助记符为 UINT_TO_DWORD
+UINT -> LWORD: 指令助记符为 UINT_TO_LWORD
+UINT -> SINT: 指令助记符为 UINT_TO_SINT
+UINT -> USINT: 指令助记符为 UINT_TO_USINT
+UINT -> INT: 源值的位模式以右对齐方式原样传递到目标数据类型。如果在转换过程中符号位发生变更，则使能输出 ENO 设置为“0”。指令助记符为 UINT_TO_INT
+UINT -> DINT: 源值的位模式以右对齐方式原样传递到目标数据类型。指令助记符为 UINT_TO_DINT
+UINT -> UDINT: 指令助记符为 UINT_TO_UDINT
+UINT -> LINT: 指令助记符为 UINT_TO_LINT
+UINT -> ULINT: 指令助记符为 UINT_TO_ULINT
+UINT -> REAL: 将值转换为目标数据类型格式。指令助记符为 UINT_TO_REAL，NORM_X
+UINT -> LREAL: 指令助记符为 UINT_TO_LREAL，NORM_X
+UINT -> TIME: 数值传递给目标数据类型，单位为毫秒。指令助记符为 UINT_TO_TIME
+UINT -> LTIME: 数值传递给目标数据类型，单位为纳秒。指令助记符为 UINT_TO_LTIME
+UINT -> S5TIME: 不能进行显式转换
+UINT -> LDT: 由于格式为 1970-1-1-0:0:0.0，因此返回结果为纳秒。指令助记符为 UINT_TO_LDT
+UINT -> DT: 不能进行显式转换
+UINT -> DTL: 不能进行显式转换
+UINT -> TOD: 转换源值的位模式，并传递给目标数据类型（由于格式为 0:0，因此单位为毫秒；检查 24 小时限值）。指令助记符为 UINT_TO_TOD
+UINT -> LTOD: 转换源值的位模式，并传递给目标数据类型（由于格式为 0:0，因此单位为纳秒；检查 24 小时限值）。指令助记符为 UINT_TO_LTOD
+UINT -> DATE: 转换源值的位模式，并传递给目标数据类型（由于格式为 1990-1-1，因此单位为天；检查负值）。指令助记符为 UINT_TO_DATE，T_CONV
+UINT -> STRING: 将值转换为一个字符串。输出正数值时不带符号。如果超出字符串所允许的长度，则使能输出 ENO 设置为“0”。指令助记符为 UINT_TO_STRING，S_CONV，VAL_STRG
+UINT -> WSTRING: 指令助记符为 UINT_TO_WSTRING
+UINT -> CHAR: 将源值的位模式原样传递到目标数据类型。发生溢出时，将使能输出 ENO 设置为“0”。指令助记符为 UINT_TO_CHAR
+UINT -> WCHAR: 指令助记符为 UINT_TO_WCHAR
+DINT -> BOOL: 可能的场景，如下所示：如果源为“0”，则目标数据类型也为“0”，同时使能输出 ENO 为“1”。如果只有源值的最低有效位 LSB 为“1”，则目标数据类型也为“1”，同时使能输出 ENO 为“1”。如果源值中的其它位与 LSB 不相同，则目标数据类型的设置取决于 LSB，同时使能输出 ENO 为“0”。指令助记符为 DINT_TO_BOOL
+DINT -> BYTE: 源值的位模式以右对齐方式原样传递到目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 DINT_TO_BYTE
+DINT -> WORD: 指令助记符为 DINT_TO_WORD
+DINT -> DWORD: 指令助记符为 DINT_TO_DWORD
+DINT -> LWORD: 指令助记符为 DINT_TO_LWORD
+DINT -> SINT: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 DINT_TO_SINT
+DINT -> USINT: 指令助记符为 DINT_TO_USINT
+DINT -> INT: 指令助记符为 DINT_TO_INT
+DINT -> UINT: 指令助记符为 DINT_TO_UINT
+DINT -> UDINT: 指令助记符为 DINT_TO_UDINT
+DINT -> LINT: 指令助记符为 DINT_TO_LINT
+DINT -> ULINT: 指令助记符为 DINT_TO_ULINT
+DINT -> REAL: 将值转换为目标数据类型格式。指令助记符为 DINT_TO_REAL，NORM_X
+DINT -> LREAL: 指令助记符为 DINT_TO_LREAL，NORM_X
+DINT -> TIME: 数值传递给目标数据类型，单位为毫秒。指令助记符为 DINT_TO_TIME，T_CONV
+DINT -> LTIME: 数值传递给目标数据类型，单位为纳秒。指令助记符为 DINT_TO_LTIME，T_CONV
+DINT -> S5TIME: 不能进行显式转换
+DINT -> LDT: 由于格式为 1970-1-1-0:0:0.0，因此返回结果为纳秒。指令助记符为 DINT_TO_LDT
+DINT -> DT: 不能进行显式转换
+DINT -> DTL: 不能进行显式转换
+DINT -> TOD: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 将置位为“0”。指令助记符为 DINT_TO_TOD
+DINT -> LTOD: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 将置位为“0”。指令助记符为 DINT_TO_LTOD
+DINT -> DATE: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 将置位为“0”。指令助记符为 DINT_TO_DATE
+DINT -> STRING: 将值转换为一个字符串。输出正数值时不带符号。如果超出字符串所允许的长度，则使能输出 ENO 设置为“0”。指令助记符为 DINT_TO_STRING，S_CONV，VAL_STRG
+DINT -> WSTRING: 指令助记符为 DINT_TO_WSTRING
+DINT -> CHAR: 转换源值的位模式，并传递给目标数据类型。如果将负值转换为一个无符号目标数据类型，则使能输出 ENO 设置为“0”。指令助记符为 DINT_TO_CHAR
+DINT -> WCHAR: 指令助记符为 DINT_TO_WCHAR
+DINT -> BCD32: 待转换值为 –999999 到 +9999999 之间的整数值，数据类型为 DINT。转换结果为 DWORD 类型的 BCD 码。发生溢出时，将使能输出设置为“0”。进行实数转换。如果值不在目标区域内，不会触发同步错误，而只会置位状态位 OV。指令助记符为 DINT_TO_BCD32 或 DINT_TO_BCD32_DWORD
+REAL -> BOOL: 不能进行显式转换
+REAL -> BYTE: 不能进行显式转换
+REAL -> WORD: 不能进行显式转换
+REAL -> DWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 REAL_TO_DWORD
+REAL -> LWORD: 不能进行显式转换
+REAL -> SINT: 数值转换为目标数据类型。如果转换中超过目标数据类型允许的值范围或待转换的值为无效浮点数，则将使能输出 ENO 设置为“0”。指令助记符包括 REAL_TO_SINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+REAL -> USINT: 指令助记符包括 REAL_TO_USINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+REAL -> INT: 指令助记符包括 REAL_TO_INT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+REAL -> UINT: 指令助记符包括 REAL_TO_UINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+REAL -> DINT: 指令助记符包括 REAL_TO_DINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+REAL -> UDINT: 指令助记符包括 REAL_TO_UDINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+REAL -> LINT: 指令助记符包括 REAL_TO_LINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+REAL -> ULINT: 指令助记符包括 REAL_TO_ULINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+REAL -> LREAL: 数值转换为目标数据类型。转换结果取决于所用的指令，如 TRUNC(2.5) = 2.0; CEIL(2.5) = 3.0。指令助记符包括 REAL_TO_LREAL, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+REAL -> TIME: 不能进行显式转换
+REAL -> LTIME: 不能进行显式转换
+REAL -> S5TIME: 不能进行显式转换
+REAL -> LDT: 不能进行显式转换
+REAL -> DT: 不能进行显式转换
+REAL -> DTL: 不能进行显式转换
+REAL -> TOD: 不能进行显式转换
+REAL -> LTOD: 不能进行显式转换
+REAL -> DATE: 不能进行显式转换
+REAL -> STRING: 将值转换为字符串。如果超过字符串长度或待转换的值为无效浮点数，将使能输出 ENO 设置为“0”。字符串最小长度为 14 个字符。指令助记符包括 REAL_TO_STRING, S_CONV, VAL_STRG
+REAL -> WSTRING: 指令助记符为 REAL_TO_WSTRING
+REAL -> CHAR: 不能进行显式转换
+REAL -> WCHAR: 不能进行显式转换
+LREAL -> BOOL: 不能进行显式转换
+LREAL -> BYTE: 不能进行显式转换
+LREAL -> WORD: 不能进行显式转换
+LREAL -> DWORD: 不能进行显式转换
+LREAL -> LWORD: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LREAL_TO_LWORD
+LREAL -> SINT: 数值转换为目标数据类型。如果转换中超过目标数据类型允许的值范围或待转换的值为无效浮点数，则将使能输出 ENO 设置为“0”。指令助记符包括 LREAL_TO_SINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+LREAL -> USINT: 指令助记符包括 LREAL_TO_USINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+LREAL -> INT: 指令助记符包括 LREAL_TO_INT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+LREAL -> UINT: 指令助记符包括 LREAL_TO_UINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+LREAL -> DINT: 指令助记符包括 LREAL_TO_DINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+LREAL -> UDINT: 指令助记符包括 LREAL_TO_UDINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+LREAL -> LINT: 指令助记符包括 LREAL_TO_LINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+LREAL -> ULINT: 指令助记符包括 LREAL_TO_ULINT, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+LREAL -> REAL: 数值转换为目标数据类型。若转换期间超过目标数据类型允许的值范围或要转换的值是无效的浮点数，则使能输出 ENO 设置为“0”。允许损失一些准确度。指令助记符包括 LREAL_TO_LREAL, ROUND, CEIL, FLOOR, TRUNC, NORM_X, SCALE_X
+LREAL -> TIME: 不能进行显式转换
+LREAL -> LTIME: 不能进行显式转换
+LREAL -> S5TIME: 不能进行显式转换
+LREAL -> LDT: 不能进行显式转换
+LREAL -> DT: 不能进行显式转换
+LREAL -> DTL: 不能进行显式转换
+LREAL -> TOD: 不能进行显式转换
+LREAL -> LTOD: 不能进行显式转换
+LREAL -> DATE: 不能进行显式转换
+LREAL -> STRING: 将值转换为字符串。如果超过字符串长度或待转换的值为无效浮点数，将使能输出 ENO 设置为“0”。字符串最小长度为 21 个字符。指令助记符包括 LREAL_TO_STRING, S_CONV, VAL_STRG
+LREAL -> WSTRING: 指令助记符为 LREAL_TO_WSTRING
+LREAL -> CHAR: 不能进行显式转换
+LREAL -> WCHAR: 不能进行显式转换
+S5TIME -> BOOL: 不能进行显式转换
+S5TIME -> BYTE: 不能进行显式转换
+S5TIME -> WORD: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 S5TIME_TO_WORD
+S5TIME -> DWORD: 不能进行显式转换
+S5TIME -> LWORD: 不能进行显式转换
+S5TIME -> SINT: 不能进行显式转换
+S5TIME -> USINT: 不能进行显式转换
+S5TIME -> INT: 不能进行显式转换
+S5TIME -> UINT: 不能进行显式转换
+S5TIME -> DINT: 不能进行显式转换
+S5TIME -> UDINT: 不能进行显式转换
+S5TIME -> LINT: 不能进行显式转换
+S5TIME -> ULINT: 不能进行显式转换
+S5TIME-> REAL: 不能进行显式转换
+S5TIME -> LREAL: 不能进行显式转换
+S5TIME -> TIME: 这里将源值转换成目标数据类型（例如 s5t#10ms 变为 T#10ms），指令助记符为 S5TIME_TO_TIME
+S5TIME -> LTIME: 这里将源值转换成目标数据类型（例如 s5t#10ms 变为 LTIME#10ms），指令助记符为 S5TIME_TO_LTIME
+S5TIME -> LDT: 不能进行显式转换
+S5TIME -> DT: 不能进行显式转换
+S5TIME -> DTL: 不能进行显式转换
+S5TIME -> TOD: 不能进行显式转换
+S5TIME -> LTOD: 不能进行显式转换
+S5TIME -> DATE: 不能进行显式转换
+S5TIME -> STRING: 不能进行显式转换
+S5TIME -> WSTRING: 不能进行显式转换
+S5TIME -> CHAR: 不能进行显式转换
+S5TIME -> WCHAR: 不能进行显式转换
+TIME -> BOOL: 不能进行显式转换
+TIME -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 TIME_TO_BYTE
+TIME -> WORD: 指令助记符为 TIME_TO_WORD
+TIME -> DWORD: 指令助记符为 TIME_TO_DWORD
+TIME -> LWORD: 指令助记符为 TIME_TO_LWORD
+TIME -> SINT: 源值的位模式以右对齐方式原样传递给目标数据类型，单位为毫秒，指令助记符为 TIME_TO_SINT
+TIME -> USINT: 指令助记符为 TIME_TO_USINT
+TIME -> INT: 指令助记符为 TIME_TO_INT
+TIME -> UINT: 指令助记符为 TIME_TO_UINT
+TIME -> DINT: 源值的位模式以右对齐方式原样传递给目标数据类型。转换结果为持续时间（毫秒），指令助记符为 TIME_TO_DINT, T_CONV
+TIME -> UDINT: 源值的位模式以右对齐方式原样传递给目标数据类型，单位为毫秒。如果符号位发生变化则使能输出 ENO 设置为“0”，指令助记符为 TIME_TO_UDINT
+TIME -> LINT: 指令助记符为 TIME_TO_LINT
+TIME -> ULINT: 指令助记符为 TIME_TO_ULINT
+TIME -> REAL: 不能进行显式转换
+TIME -> LREAL: 不能进行显式转换
+TIME -> S5TIME: 这里将源值转换成目标数据类型（例如 T#10ms 变为 s5t#10ms），指令助记符为 TIME_TO_TIME
+TIME -> LTIME: 这里将源值转换成目标数据类型（例如 T#10ms 变为 LTIME#10ms），指令助记符为 TIME_TO_LTIME
+TIME -> LDT: 不能进行显式转换
+TIME -> DT: 不能进行显式转换
+TIME -> DTL: 不能进行显式转换
+TIME -> TOD: 源值的位模式以右对齐方式原样传递给目标数据类型。如果源值超出 TOD 的值范围，则目标数据类型保持不变，指令助记符为 TIME_TO_TOD
+TIME -> LTOD: 不能进行显式转换
+TIME -> DATE: 不能进行显式转换
+TIME -> STRING: 不能进行显式转换
+TIME -> WSTRING: 不能进行显式转换
+TIME -> CHAR: 不能进行显式转换
+TIME -> WCHAR: 不能进行显式转换
+DT -> BOOL: 不能进行显式转换
+DT -> BYTE: 不能进行显式转换
+DT -> WORD: 不能进行显式转换
+DT -> DWORD: 不能进行显式转换
+DT -> LWORD: 不能进行显式转换
+DT -> SINT: 不能进行显式转换
+DT -> USINT: 不能进行显式转换
+DT -> INT: 不能进行显式转换
+DT -> UINT: 不能进行显式转换
+DT -> DINT: 不能进行显式转换
+DT -> UDINT: 不能进行显式转换
+DT -> LINT: 不能进行显式转换
+DT -> ULINT: 不能进行显式转换
+DT -> REAL: 不能进行显式转换
+DT -> LREAL: 不能进行显式转换
+DT -> S5TIME: 不能进行显式转换
+DT -> TIME: 不能进行显式转换
+DT -> LTIME: 不能进行显式转换
+DT -> LDT: 这里将源值转换成目标数据类型（例如 DT#1990-1-2-0:0:1.0 变为 LDT#1990-1-2-0:0:1.0），指令助记符为 DT_TO_LDT
+DT -> DTL: 这里将源值转换成目标数据类型（例如 DT#1990-1-2-0:0:1.0 变为 DTL#1990-1-2-0:0:1.0），指令助记符为 DT_TO_DTL
+DT -> TOD: 这里将源值转换成目标数据类型（例如 DT#1990-1-2-0:0:1.0 变为 TOD#1990-1-2-0:0:1.0），指令助记符为 DT_TO_TOD
+DT -> LTOD: 这里将源值转换成目标数据类型（例如 DT#1990-1-2-0:0:1.0 变为 LTOD#1990-1-2-0:0:1.0），指令助记符为 DT_TO_LTOD
+DT -> DATE: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 DT_TO_DATE
+DT -> STRING: 不能进行显式转换
+DT -> WSTRING: 不能进行显式转换
+DT -> CHAR: 不能进行显式转换
+DT -> WCHAR: 不能进行显式转换
+LDT -> BOOL: 不能进行显式转换
+LDT -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LDT_TO_BYTE
+LDT -> WORD: 指令助记符为 LDT_TO_WORD
+LDT -> DWORD: 指令助记符为 LDT_TO_DWORD
+LDT -> LWORD: 指令助记符为 LDT_TO_LWORD
+LDT -> SINT: 指令助记符为 LDT_TO_SINT
+LDT -> USINT: 指令助记符为 LDT_TO_USINT
+LDT -> INT: 指令助记符为 LDT_TO_INT
+LDT -> UINT: 指令助记符为 LDT_TO_UINT
+LDT -> DINT: 指令助记符为 LDT_TO_DINT
+LDT -> UDINT: 指令助记符为 LDT_TO_UDINT
+LDT -> LINT: 指令助记符为 LDT_TO_LINT
+LDT -> ULINT: 指令助记符为 LDT_TO_ULINT
+LDT -> REAL: 不能进行显式转换
+LDT -> LREAL: 不能进行显式转换
+LDT -> S5TIME: 不能进行显式转换
+LDT -> TIME: 不能进行显式转换
+LDT -> LTIME: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LDT_TO_LTIME
+LDT -> DT: 这里将源值转换成目标数据类型（例如 LDT#1990-1-2-0:0:1.0 变为 DT#1990-1-2-0:0:1.0），指令助记符为 LDT_TO_DT
+LDT -> DTL: 这里将源值转换成目标数据类型（例如 LDT#1990-1-2-0:0:1.0 变为 DTL#1990-1-2-0:0:1.0），指令助记符为 LDT_TO_DTL
+LDT -> TOD: 这里将源值转换成目标数据类型（例如 LDT#1990-1-2-0:0:1.0 变为 TOD#1990-1-2-0:0:1.0），指令助记符为 LDT_TO_TOD
+LDT -> LTOD: 这里将源值转换成目标数据类型（例如 LDT#1990-1-2-0:0:1.0 变为 LTOD#1990-1-2-0:0:1.0），指令助记符为 LDT_TO_LTOD
+LDT -> DATE: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 LDT_TO_DATE
+LDT -> STRING: 不能进行显式转换
+LDT -> WSTRING: 不能进行显式转换
+LDT -> CHAR: 不能进行显式转换
+LDT -> WCHAR: 不能进行显式转换
+DTL -> BOOL: 不能进行显式转换
+DTL -> BYTE: 不能进行显式转换
+DTL -> WORD: 不能进行显式转换
+DTL -> DWORD: 不能进行显式转换
+DTL -> LWORD: 不能进行显式转换
+DTL -> SINT: 不能进行显式转换
+DTL -> USINT: 不能进行显式转换
+DTL -> INT: 不能进行显式转换
+DTL -> UINT: 不能进行显式转换
+DTL -> DINT: 不能进行显式转换
+DTL -> UDINT: 不能进行显式转换
+DTL -> LINT: 不能进行显式转换
+DTL -> ULINT: 不能进行显式转换
+DTL -> REAL: 不能进行显式转换
+DTL -> LREAL: 不能进行显式转换
+DTL -> S5TIME: 不能进行显式转换
+DTL -> TIME: 不能进行显式转换
+DTL -> LTIME: 不能进行显式转换
+DTL -> LDT: 这里将源值转换成目标数据类型（例如 DTL#1990-1-2-0:0:1.0 变为 LDT#1990-1-2-0:0:1.0），指令助记符为 DTL_TO_LDT
+DTL -> DT: 这里将源值转换成目标数据类型（例如 DTL#1990-1-2-0:0:1.0 变为 DT#1990-1-2-0:0:1.0），指令助记符为 DTL_TO_DT
+DTL -> TOD: 在转换期间，从 DTL 格式提取时间信息，然后写入到目标数据类型中，指令助记符为 DTL_TO_TOD, T_CONV
+DTL -> LTOD: 指令助记符为 DTL_TO_LTOD
+DTL -> DATE: 在转换期间，从 DTL 格式提取日期信息并转换为目标数据类型。发生溢出时，将使能输出 ENO 设置为“0”，指令助记符为 DTL_TO_DATE, T_CONV
+DTL -> STRING: 不能进行显式转换
+DTL -> WSTRING: 不能进行显式转换
+DTL -> CHAR: 不能进行显式转换
+DTL -> WCHAR: 不能进行显式转换
+DATE -> BOOL: 不能进行显式转换
+DATE -> BYTE: 源值的位模式以右对齐方式原样传递到目标数据类型，指令助记符为 DATE_TO_BYTE
+DATE -> WORD: 指令助记符为 DATE_TO_WORD
+DATE -> DWORD: 指令助记符为 DATE_TO_DWORD
+DATE -> LWORD: 指令助记符为 DATE_TO_LWORD
+DATE -> SINT: 结果返回自 1990 年 1 月 1 日开始的天数，指令助记符为 DATE_TO_SINT
+DATE -> USINT: 指令助记符为 DATE_TO_USINT
+DATE -> INT: 指令助记符为 DATE_TO_INT
+DATE -> UINT: 指令助记符为 DATE_TO_UINT
+DATE -> DINT: 指令助记符为 DATE_TO_DINT
+DATE -> UDINT: 指令助记符为 DATE_TO_UDINT
+DATE -> LINT: 指令助记符为 DATE_TO_LINT
+DATE -> ULINT: 指令助记符为 DATE_TO_ULINT
+DATE -> REAL: 不能进行显式转换
+DATE -> LREAL: 不能进行显式转换
+DATE -> S5TIME: 不能进行显式转换
+DATE -> TIME: 不能进行显式转换
+DATE -> LTIME: 不能进行显式转换
+DATE -> DT: 转换按目标类型设置天数，指令助记符为 DATE_TO_DT
+DATE -> LDT: 指令助记符为 DATE_TO_LDT
+DATE -> DTL: 数据类型 DTL 将进行如下初始化：1970-1-1-0:0:0。对 DATE_TO_DTL 进行转换时，将仅置位 DTL 的相应部分。DTL 的其它部分将保留原来的初始化状态。指令助记符为 DATE_TO_DTL
+DATE -> TOD: 不能进行显式转换
+DATE -> LTOD: 不能进行显式转换
+DATE -> STRING: 不能进行显式转换
+DATE -> WSTRING: 不能进行显式转换
+DATE -> CHAR: 不能进行显式转换
+DATE -> WCHAR: 不能进行显式转换
+CHAR -> BOOL: 不能进行显式转换
+CHAR -> BYTE: 源值的位模式以右对齐方式原样传递给目标数据类型，指令助记符为 CHAR_TO_BYTE
+CHAR -> WORD: 指令助记符为 CHAR_TO_WORD
+CHAR -> DWORD: 指令助记符为 CHAR_TO_DWORD
+CHAR -> LWORD: 指令助记符为 CHAR_TO_LWOR
+CHAR -> SINT: 指令助记符为 CHAR_TO_SINT
+CHAR -> USINT: 指令助记符为 CHAR_TO_USINT
+CHAR -> INT: 指令助记符为 CHAR_TO_INT
+CHAR -> UINT: 指令助记符为 CHAR_TO_UINT
+CHAR -> DINT: 指令助记符为 CHAR_TO_DINT
+CHAR -> UDINT: 指令助记符为 CHAR_TO_UDINT
+CHAR -> LINT: 指令助记符为 CHAR_TO_LINT
+CHAR -> ULINT: 指令助记符为 CHAR_TO_ULINT
+CHAR -> REAL: 不能进行显式转换
+CHAR -> LREAL: 不能进行显式转换
+CHAR -> S5TIME: 不能进行显式转换
+CHAR -> TIME: 不能进行显式转换
+CHAR -> LTIME: 不能进行显式转换
+CHAR -> DT: 不能进行显式转换
+CHAR -> LDT: 不能进行显式转换
+CHAR -> DTL: 不能进行显式转换
+CHAR -> TOD: 不能进行显式转换
+CHAR -> LTOD: 不能进行显式转换
+CHAR -> DATE: 不能进行显式转换
+CHAR -> STRING: 值将转换为字符串 (STRING) 的第一个字符。如果未定义字符串长度，则在转换后设置长度“1”。如果定义了字符串长度，则转换后仍保持不变。指令助记符为 CHAR_TO_STRING, S_CONV
+CHAR -> WSTRING: 不能进行显式转换
+CHAR -> WCHAR: 指令助记符为 CHAR_TO_WCHAR
+STRING -> BOOL: 不能进行显式转换
+STRING -> BYTE: 不能进行显式转换
+STRING -> WORD: 不能进行显式转换
+STRING -> DWORD: 不能进行显式转换
+STRING -> LWORD: 不能进行显式转换
+STRING -> SINT: 从字符串 (STRING) 的第一个开始转换，直到字符串的结尾或者到第一个不允许的字符处结束。允许转换以下字符：数字、符号、句点。字符串的第一个字符可以是符号 (+, -) 或数字。将忽略前导空格。句点用于分隔浮点数的转换。不允许使用指数符号“e”或“E”。允许小数点左边出现逗号作为千位分隔符，但是该逗号会被忽略。如果转换的字符串格式无效或者发生溢出，将使能输出 ENO 设置为“0”。指令助记符为 STRING_TO_SINT, S_CONV, STRG_VAL
+STRING -> USINT: 指令助记符为 STRING_TO_USINT, S_CONV, STRG_VAL
+STRING -> INT: 指令助记符为 STRING_TO_INT, S_CONV, STRG_VAL
+STRING -> UINT: 指令助记符为 STRING_TO_UINT, S_CONV, STRG_VAL
+STRING -> DINT: 指令助记符为 STRING_TO_DINT, S_CONV, STRG_VAL
+STRING -> UDINT: 指令助记符为 STRING_TO_UDINT, S_CONV, STRG_VAL
+STRING -> LINT: 指令助记符为 STRING_TO_LINT, S_CONV, STRG_VAL
+STRING -> ULINT: 指令助记符为 STRING_TO_ULINT, S_CONV, STRG_VAL
+STRING -> REAL: 指令助记符为 STRING_TO_REAL, S_CONV, STRG_VAL
+STRING -> LREAL: 指令助记符为 STRING_TO_LREAL, S_CONV, STRG_VAL
+STRING -> S5TIME: 不能进行显式转换
+STRING -> TIME: 不能进行显式转换
+STRING -> LTIME: 不能进行显式转换
+STRING -> DT: 不能进行显式转换
+STRING -> LDT: 不能进行显式转换
+STRING -> DTL: 不能进行显式转换
+STRING -> TOD: 不能进行显式转换
+STRING -> LTOD: 不能进行显式转换
+STRING -> DATE: 不能进行显式转换
+STRING -> CHAR: 将字符串 (STRING) 的第一个字符转换为目标数据类型。如果字符串为空，将值“0”写入目标数据类型。指令助记符为 STRING_TO_CHAR, S_CONV
+STRING -> WCHAR: 不能进行显式转换
+STRING -> WSTRING: 指令助记符为 STRING_TO_WSTRING

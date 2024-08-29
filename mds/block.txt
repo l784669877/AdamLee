@@ -1,0 +1,197 @@
+块接口的规则：
+- 块接口包含块所用局部变量和局部常量的声明，分为块参数和用于存储中间结果的局部数据。
+- 块参数类型包括：
+  - Input：其值由块读取的参数。
+  - Output：其值由块写入的参数。
+  - InOut：调用时由块读取其值，执行后又由块写入其值的参数。
+  - Return：返回到调用块的值。
+- 局部数据类型包括：
+  - Temp：用于存储临时中间结果的变量，只保留一个周期的数据。
+  - Static：用于在背景数据块中存储静态中间结果的变量，数据会一直保留到被覆盖。
+  - Constant：在块中使用且带有声明符号名的常量。
+- 使用块参数的规则：
+  - Input参数只能读取。
+  - Output参数只能写入。
+  - InOut参数可读取和写入。
+- 块接口中的有效数据类型（S7-300, S7-400）：
+  - Temp：允许ARRAY, STRUCT, POINTER, ANY。
+  - Constant：允许ARRAY, STRUCT（不允许作为常量）。
+  - Input/Output/InOut（函数块）：允许ARRAY, STRUCT, STRING（标准长度254字符），DT参数类型允许POINTER, ANY。
+  - Static：允许ARRAY, STRUCT。
+  - Temp（函数）：允许ARRAY, STRUCT。
+  - Return（函数）：允许ARRAY, STRUCT, STRING，不允许ANY作为函数值。
+
+块接口中的有效数据类型：
+S7-300/400:
+- 区域：Temp
+  - 数据类型：ARRAY, STRUCT, VOID, POINTER, ANY
+- 区域：常量
+  - 数据类型：ARRAY, STRUCT
+- 区域：Input, Output, InOut, Static (函数块)
+  - 数据类型：ARRAY, STRUCT, STRING, DT参数类型
+- 区域：Input, Output, InOut, Temp (函数)
+  - 数据类型：ARRAY, STRUCT, STRING, DT参数类型
+- 区域：返回
+  - 数据类型：ARRAY, STRUCT, STRING
+
+S7-1200/1500:
+- 区域：Temp
+  - 数据类型：ARRAY, STRUCT, STRING/WSTRING, DTARRAY[*], VOID, VARIANT
+- 区域：常量
+  - 数据类型：ARRAY, STRUCT
+- 区域：Input, Output, InOut, Static (函数块)
+  - 数据类型：ARRAY, STRUCT, STRING/WSTRING, DTARRAY[*], VOID, DB_ANY, POINTER, ANY, VARIANT, REF_TO_NVT
+- 区域：Input, Output, InOut, Temp (函数)
+  - 数据类型：ARRAY, STRUCT, STRING/WSTRING, DTARRAY[*], VOID, DB_ANY, POINTER, ANY, VARIANT, REF_TO_NVT
+- 区域：返回
+  - 数据类型：ARRAY, STRUCT, STRING/WSTRING
+
+注意：
+- STRING 和 WSTRING 的长度不能在所有区域中声明。
+- ARRAY[*] 可用于具有优化访问权的块中。
+- 结构化数据类型（如 ARRAY、STRUCT）在 “Temp” 区域中应访问单独的基本结构元素。
+- NVT 仅在软件单元中可用。
+
+声明预定义的实参：
+1. 打开块接口。
+2. 在块接口中选择一个参数。
+3. 在巡视窗口中，打开“属性”选项卡。
+4. 在区域导航中选择“属性”组。
+5. 在“预定义实参”输入框中输入所需的实参。
+6. 在“在 LAD/FBD 的块调用中显示”中，选择“隐藏”。
+7. 在附加选项中，选择“如果块调用时指定的参数与预定义的实参不同则显示”。
+
+以下是提取的语法规则：
+1. 预定义实参的步骤。
+2. 插入表格行的步骤。
+3. 删除变量的步骤。
+4. 自动填充连续单元格的步骤。
+5. 显示和隐藏表列的步骤。
+6. 使用外部编辑器编辑变量的步骤。
+
+块声明和返回值的语法如下：
+- 函数 (FC)
+  - FUNCTION <名称> [:返回值数据类型]
+  - 示例：FUNCTION "My_Function" : Int
+  - 示例：FUNCTION "My_Function" : Void
+
+- 函数块 (FB)
+  - FUNCTION_BLOCK <名称>
+  - 示例：FUNCTION_BLOCK "My_FunctionBlock"
+
+- 组织块 (OB)
+  - ORGANIZATION_BLOCK <名称>
+  - 示例：ORGANIZATION_BLOCK "My_OrganizationBlock"
+
+声明部分的语法：
+- Input 参数
+  - VAR_INPUT [<ATTRIBUTE>] <声明> END_VAR
+
+- Output 参数
+  - VAR_OUTPUT [<ATTRIBUTE>] <声明> END_VAR
+
+- In/out 参数
+  - VAR_IN_OUT [<ATTRIBUTE>] <声明> END_VAR
+
+- 临时局部数据
+  - VAR_TEMP <声明> END_VAR
+
+- 静态局部数据
+  - VAR [<ATTRIBUTE>] <声明> END_VAR
+
+- 常量
+  - VAR CONSTANT <声明> END_VAR
+
+变量或常量的声明和初始化语法：
+- 变量声明由符号名称和数据类型组成，可选择指定初始化变量的默认值。
+- 常量声明始终包含一个数值。
+
+AT 覆盖声明的语法：
+- AT <数据类型> <地址>
+- AT 声明不能初始化。
+
+变量或常量的声明和初始化:
+- 变量声明由符号名称和数据类型组成。可选择指定初始化变量的默认值。
+- 常量声明由符号名称、数据类型和一个数值组成。仅在“VAR CONSTANT”部分允许常量声明。
+
+声明语法:
+- 变量声明: <名称> : <数据类型> [:= <值>];
+- 常量声明: <名称> : <数据类型> := <值>;
+- AT声明: <名称> AT <引用变量名称> : <数据类型>;
+
+STRUCT声明:
+- STRUCT数据类型是一种元素数量固定但数据类型不同的数据结构。
+- 可基于PLC数据类型(UDT)创建结构。
+- 语法: 
+  - STRUCT声明: STRUCT <名称> : Struct ... END_STRUCT [:= (<初始化列表>)];
+  - 基于UDT的STRUCT声明: <名称> : "<UDT名称>" := (<初始化列表>);
+
+ARRAY声明:
+- ARRAY数据类型表示一个由数目固定且数据类型相同的元素组成的数据结构。
+- 语法: (具体ARRAY声明语法在文本中未给出，需参考其他文档或后续内容)
+
+声明 语法 示例 注释
+嵌套 PLC 数据类型 (UDT) 的初始化列表 := (<值>,(<值>,<值>... )) myStruct : "myType" := (2,0,(TRUE,TRUE));
+PLC 数据类型 (UDT) 的初始化列表（带元素命名规范） := (<元素名称> := <值>), (<元素名称> := <值>)... myStruct : "myType" := (mem_1:=22,mem_2:=55);
+ARRAY 声明
+ARRAY <名称> : ARRAY [下限 ..上限] OF <数据类型> := [<初始化列表>]; MyARRAY_1 : ARRAY[0..7] OF BOOL := [1,1,0,0,0,1,0,0];
+限值可变的 ARRAY <名称> : ARRAY [*] OF <数据类型>; MyARRAY_1 : ARRAY[*] OF INT;
+局部常量作限值的 ARRAY <名称> : ARRAY [#<常量名称>..#<常量名称>] OF <数据类型> := [<初始化列表>]; MyARRAY_1 : ARRAY[#LocConst1..#LocConst2] OF INT;
+全局常量作限值的 ARRAY <名称> : ARRAY ["<常量名称>"..<常量名称>] OF <数据类型> := [<初始化列表>]; MyARRAY_1 : ARRAY["GlobConst1".."GlobConst2"] OF INT;
+STRUCT 数据类型 ARRAY <名称> : ARRAY[下限 ..上限] OF Struct <元素名称> : <数据类型>; <元素名称> : <数据类型>; ... END_Struct := [<初始化列表>]; MyARRAY_1 : Array[0..1] OF Struct mem_1 : Int; mem_2 : Int; END_STRUCT := [(2,4),(22,44)];
+UDT 数据类型的 ARRAY <名称> : ARRAY[下限 ..上限] OF "<UDT_名称>" := [<参数列表>]; MyARRAY_1 : Array[0..1] OF MyType := [(2,4),(22,44)];
+初始化列表 := [<值>,<值>,<值>... ] myArray : ARRAY[0..2] OF BOOL := [1,1,0];
+包含重复因子的初始化列表 := [<值>,<重复因子>(值),<值>... ] myArray : ARRAY[1..2, 1..3] OF INT := [9,8,3(10),6];
+STRUCT 数据类型 ARRAY 的初始化列表 := [(<值列表元素 1>), (<值列表元素 2>)...] myArray : Array[0..1] OF Struct Element1 : Int; Element2 : Int; END_Struct := [(2,4),(22,44)];
+ARRAY of STRUCT 的初始化列表（带元素命名规范） := [(<元素名称> := <值>), (<元素名称> := <值>)...] myArray : Array[0..1] OF Struct Element1 : Int; Element2 : Int; END_Struct := [(Element1 := 2, Element2:=4), (Element1 := 22, Element2:=44)];
+ARRAY of STRUCT 的初始化列表（带重复因子） := [<重复因子>(值列表元素 1),<重复因子>(值列表元素 2),... ] myArray : Array[0..1, 0..1] OF Struct Element_x : Int; Element_y : Int; End_Struct:=[2((1, 11)), 2((2, 22))];
+
+ARRAY of STRUCT 的初始化列表（带重复因子）:= [<重复因子 >(值列表元素 1),<重复因子 >(值列表元素 2),... ]
+示例:
+myArray : Array[0..1, 0..1] OF Struct
+   Element_x : Int; 
+   Element_y : Int; 
+End_Struct:=[2((1, 11)), 2((2, 22))];
+
+UDT 数据类型 ARRAY 的初始化列表:= [(值列表元素 1>), (<值列表元素 2>)...]
+示例:
+myArray : Array[0..1] OF MyType := [ (2,4),(22,44) ];
+
+ARRAY of UDT 的初始化列表（带元素命名规范）:= [(<元素名称 > := <值>), (<元素名称 > := <值>)...]
+示例:
+myArray : Array[0..1] OF MyType := [ (UDT-Element1 := 2,UDT-Element2:=4),(UDT-Element1 := 22,UDT-Element2:=44) ];
+
+ARRAY of UDT 的初始化列表（带重复因子）:= [<重复因子 >(值列表元素 1),<重复因子 >(值列表元素 2),... ]
+示例:
+myArray : Array[0..1] OF myType :=[2(((),1))];
+
+STRING 和 WSTRING 的声明
+示例:
+myString: STRING;
+myString: STRING := 'hello';
+myWstring: WSTRING;
+myWstring_var: WSTRING := 'helloWorld';
+长度为定义的最大值的 STRING
+示例:
+myString: STRING[10];
+myString: STRING["globConst"];
+myString: STRING[#locConst];
+
+实例声明
+示例:
+多重实例
+VAR instFB : "MyFB";
+END_VAR
+
+多重实例 ARRAY
+VAR instArray : ARRAY [0…4] of "MyFB";
+END_VAR
+
+参数实例
+VAR_IN_OUT instParam:"MyFB";
+END_VAR
+
+实例 语法 示例 含义
+多重实例VAR <多重实例名称 >:"<块名称 >"; END_VAR instFB : "MyFB"; END_VAR “instFB”是“MyFB”块的一个多重实例。
+多重实例 ARRAYVAR <多重实例名称 >: ARRAY [n...m] of "<块名称>"; END_VAR instArray : ARRAY [0…4] of "MyFB"; END_VAR “instArray“ 是”MyFB“块的一个多重实例数组。
+参数实例VAR <参数实例名称 >:"<块名称 >"; END_VAR VAR_IN_OUT instParam:"MyFB"; END_VAR “instParam” 是“MyFB”块的一个参数实例。
